@@ -1,609 +1,366 @@
-
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EPJ 2026 | École de Prière des Jeunes</title>
+    <title>JMJ Séoul 2027 - Trouve ton groupe</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
-        /* IMPORT DE TA POLICE NEW TITLE VARIABLE */
-        @font-face {
-            font-family: 'NewTitle';
-            src: url('https://raw.githubusercontent.com/Cyprdu/PaJe/main/police/NewTitle-Variable.ttf') format('truetype');
-            font-weight: 100 900; /* Permet d'exploiter toutes les épaisseurs */
-            font-style: normal;
-            font-display: swap;
-        }
-
+        /* --- CHARTE GRAPHIQUE --- */
         :root {
-            /* Palette Pastel et Chaleureuse */
-            --primary: #E07A5F; /* Corail / Terracotta */
-            --primary-hover: #D26A4F;
-            --secondary: #F2CC8F; /* Jaune Sable pastel */
-            --bg-light: #FDFBF7; /* Blanc cassé coquille d'oeuf */
-            --text-dark: #3D405B; /* Bleu marine doux */
-            --text-gray: #7A7C8C;
-            --radius: 20px;
+            --jmj-red: #F42736;
+            --jmj-blue: #0047BB;
+            --jmj-yellow: #F8E772;
+            --jmj-black: #000000;
+            --jmj-white: #ffffff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        /* --- STYLES DE BASE --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.7;
-            overflow-x: hidden;
-            background-image: radial-gradient(rgba(242, 204, 143, 0.4) 1px, transparent 1px);
-            background-size: 30px 30px; 
+            font-family: 'Poppins', sans-serif;
+            background-color: #fafafa;
+            color: var(--jmj-black);
         }
 
-        /* --- TYPOGRAPHIE --- */
-        h1, h2, h3, .title-bold {
-            font-family: 'NewTitle', sans-serif;
-            font-weight: 800; /* BOLD */
+        h1, h2, h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.1;
-            margin-top: 0;
+        }
+
+        /* --- HEADER & HERO SECTION --- */
+        .hero {
+            background-color: var(--jmj-red);
+            color: var(--jmj-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
             position: relative;
+            overflow: hidden;
+        }
+
+        .hero-logo {
+            max-width: 300px;
+            margin-bottom: 2rem;
             z-index: 2;
         }
 
-        /* La police d'accroche (Light, sans majuscule, très collée au titre) */
-        .section-tag {
-            font-family: 'NewTitle', sans-serif;
-            font-weight: 300; /* LÉGER */
-            color: var(--primary);
-            font-size: 2rem;
-            margin-bottom: -8px; /* RAPPROCHÉ DU TITRE */
-            display: inline-block;
-            transform: rotate(-2deg);
-            position: relative;
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            z-index: 2;
+            line-height: 1.6;
+        }
+
+        .btn-primary {
+            background-color: var(--jmj-yellow);
+            color: var(--jmj-black);
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* --- SECTION ABOUT --- */
+        .about {
+            padding: 5rem 2rem;
+            text-align: center;
+            background-color: var(--jmj-white);
+        }
+
+        .about h2 {
+            color: var(--jmj-blue);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about p {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+        }
+
+        /* --- SECTION CARTE & LISTE --- */
+        .groups-section {
+            padding: 5rem 2rem;
+            background-color: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .groups-section h2 {
+            color: var(--jmj-red);
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .app-container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: 600px;
+            background: var(--jmj-white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        #map {
+            flex: 2;
+            height: 100%;
             z-index: 1;
         }
 
-        .highlight {
-            color: var(--secondary);
-            position: relative;
-            display: inline-block;
-        }
-        
-        .highlight::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: -5%;
-            width: 110%;
-            height: 10px;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg"><path d="M 0 5 Q 30 10 100 2" stroke="%23F2CC8F" stroke-width="4" fill="none" stroke-linecap="round"/></svg>') no-repeat center;
-            background-size: contain;
-            z-index: -1;
+        .list-container {
+            flex: 1;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem;
+            background: var(--jmj-white);
+            border-left: 2px solid #eee;
         }
 
-        /* --- BOUTONS --- */
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 15px 35px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif; /* Police standard et lisible */
-            font-size: 1.05rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-            box-shadow: 0 10px 20px rgba(224, 122, 95, 0.3);
-        }
-        .btn-primary:hover {
-            background: var(--primary-hover);
-            transform: translateY(-3px) rotate(-1deg);
-            box-shadow: 0 15px 25px rgba(224, 122, 95, 0.4);
-        }
-        .btn-white {
-            background: white;
-            color: var(--primary);
-        }
-        .btn-white:hover {
-            transform: translateY(-3px) rotate(1deg);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        .group-card {
+            background: #fff;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
         }
 
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed;
-            top: 0; width: 100%;
-            padding: 20px 5%;
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-            background: transparent;
-            transition: all 0.4s ease;
+        .group-card:hover {
+            border-color: var(--jmj-blue);
         }
-        nav.scrolled {
-            background: var(--text-dark);
-            padding: 10px 5%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-        }
-        .nav-logo { height: 40px; width: auto; object-fit: contain; transition: 0.3s; }
-        
-        /* Menu aligné à droite */
-        .nav-links {
-            display: flex;
-            gap: 35px;
-            list-style: none;
-            margin-left: auto; /* Pousse le menu à droite */
-            margin-right: 40px;
-        }
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1rem;
-            position: relative;
-            padding-bottom: 5px;
-            opacity: 0.9;
-        }
-        .nav-links a:hover { opacity: 1; }
-        
-        /* Trait souligné style main au survol */
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 0%; height: 6px;
-            background: url('data:image/svg+xml;utf8,<svg preserveAspectRatio="none" viewBox="0 0 100 10" xmlns="http://www.w3.org/2000/svg"><path d="M 0 5 Q 50 10 100 2" stroke="%23F2CC8F" stroke-width="5" fill="none" stroke-linecap="round"/></svg>') no-repeat left center;
-            background-size: 100% 100%;
-            transition: width 0.3s ease;
-        }
-        .nav-links a:hover::after { width: 100%; }
 
-        /* --- HERO SECTION --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            background: url('http://localhost/paje/uploads/69661ca767fdd.png') center/cover;
-            background-color: #3D405B;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(61, 64, 91, 0.7), rgba(224, 122, 95, 0.6));
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            color: white;
-            max-width: 1000px;
-            padding: 0 20px;
-        }
-        .hero-logo-img {
-            max-width: 95%;
-            width: 700px; /* Logo grossi */
-            margin: 0 auto 40px auto;
+        .group-region {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: var(--jmj-red);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
             display: block;
-            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
         }
 
-        /* --- FONDS FLUIDES ARRONDIS (Vagues) --- */
-        .bg-curved {
-            position: relative;
-            background: var(--primary);
-            color: white;
-            padding: 100px 5%;
-            margin: 80px 0; /* Laisse l'espace pour la vague */
-        }
-        .bg-curved::before, .bg-curved::after {
-            content: '';
-            position: absolute;
-            left: 0; right: 0;
-            height: 80px;
-            background: var(--primary);
-            z-index: -1;
-        }
-        .bg-curved::before {
-            top: -40px;
-            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-        }
-        .bg-curved::after {
-            bottom: -40px;
-            border-radius: 0 0 50% 50% / 0 0 100% 100%;
+        .group-title {
+            font-size: 1.2rem;
+            color: var(--jmj-black);
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
         }
 
-        .bg-curved h2 { color: white; }
-        .bg-curved .section-tag { color: var(--secondary); }
-
-        /* --- GRAND MESSAGE --- */
-        .big-quote { text-align: center; }
-        .big-quote h2 { font-size: clamp(2.5rem, 5vw, 4.5rem); max-width: 1000px; margin: 0 auto; }
-
-        /* --- SPLIT SECTIONS --- */
-        .split-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            padding: 60px 5%;
-            max-width: 1300px;
-            margin: 0 auto;
-            align-items: center;
-        }
-        .split-section.reverse { direction: rtl; }
-        .split-section.reverse > * { direction: ltr; }
-        .split-text h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 25px; }
-        .split-text p { margin-bottom: 20px; font-size: 1.15rem; color: var(--text-gray); }
-        
-        /* Polaroïd + Shout lines */
-        .polaroid-wrapper { position: relative; padding: 20px; }
-        .polaroid-wrapper::before {
-            content: '';
-            position: absolute;
-            top: -10px; right: 0px;
-            width: 60px; height: 60px;
-            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg"><path d="M10,40 L5,20 M25,35 L25,10 M40,40 L45,20" stroke="%23E07A5F" stroke-width="4" stroke-linecap="round"/></svg>') no-repeat center;
-            z-index: 10;
-        }
-        
-        .polaroid-img {
-            background: white;
-            padding: 15px 15px 30px 15px;
-            border-radius: 5px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            transform: rotate(2deg);
-            transition: all 0.4s ease;
-        }
-        .polaroid-img:hover { transform: rotate(0deg) scale(1.02); }
-        .polaroid-img img { width: 100%; height: auto; border-radius: 3px; }
-        .polaroid-caption {
-            font-family: 'NewTitle', sans-serif;
-            font-weight: 300;
-            text-align: center;
-            color: var(--text-gray);
-            margin-top: 15px;
-            font-size: 1.4rem;
+        .group-places {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
         }
 
-        /* Boîte infos prix dessinée */
-        .scribble-box {
-            border: 3px solid var(--secondary);
-            border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-            padding: 30px;
-            background: rgba(255,255,255,0.6);
-            margin-top: 30px;
+        .group-card a {
+            display: inline-block;
+            background-color: var(--jmj-blue);
+            color: var(--jmj-white);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
         }
 
-        /* --- COLLAGE PHOTOS (Grille unie parfaite) --- */
-        .collage-section { padding: 80px 5%; }
-        .collage-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 250px);
-            gap: 20px;
-            max-width: 1200px;
-            margin: 50px auto 0;
+        .group-card a:hover {
+            background-color: #003388;
         }
-        
-        /* Placement exact pour ne pas avoir de trou */
-        .collage-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1 / 3; } /* Grand Jeu prend 2x2 en haut à gauche */
-        .collage-item:nth-child(2) { grid-column: 3; grid-row: 1; }         /* Louange en haut à droite */
-        .collage-item:nth-child(3) { grid-column: 3; grid-row: 2; }         /* Adoration milieu droite */
-        .collage-item:nth-child(4) { grid-column: 1; grid-row: 3; }         /* Témoignages bas gauche */
-        .collage-item:nth-child(5) { grid-column: 2; grid-row: 3; }         /* Formation bas centre */
-        .collage-item:nth-child(6) { grid-column: 3; grid-row: 3; }         /* Prière bas droite */
-
-        .collage-item {
-            position: relative;
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-        }
-        .collage-item img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
-        }
-        .collage-item:hover img { transform: scale(1.05); }
-        
-        /* Dégradé noir sur l'image pour lire le texte */
-        .collage-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 60%);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 25px;
-            color: white;
-            pointer-events: none;
-        }
-        .collage-overlay h3 { font-size: 2rem; margin-bottom: 5px; color: var(--secondary); }
-        .collage-overlay p { font-size: 0.95rem; opacity: 0.9; margin:0; font-family: 'Inter', sans-serif;}
-
-        /* --- VIDEO TEASER (Alignements corrigés) --- */
-        .video-section {
-            padding: 100px 5%;
-            text-align: center; /* Tout est bien centré */
-        }
-        .video-container {
-            max-width: 1000px;
-            margin: 40px auto 0 auto; /* Margin auto pour centrer le bloc */
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-soft);
-            aspect-ratio: 16/9;
-        }
-        .video-container iframe {
-            width: 100%; height: 100%; border: none; display: block;
-        }
-
-        /* --- PROGRAMME & SÉCURITÉ --- */
-        .graphic-container { max-width: 1200px; margin: 40px auto; }
-        .graphic-container img { width: 100%; height: auto; box-shadow: none; border-radius: var(--radius); }
 
         /* --- FOOTER --- */
         footer {
-            background: var(--text-dark);
-            color: white;
-            padding: 80px 5% 40px;
-            border-top: 5px solid var(--secondary);
-            margin-top: 50px;
+            background-color: var(--jmj-black);
+            color: var(--jmj-white);
+            text-align: center;
+            padding: 4rem 2rem 0 2rem;
         }
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 50px;
-            max-width: 1200px;
-            margin: 0 auto 50px;
-        }
-        .footer-col h4 { font-size: 1.5rem; margin-bottom: 25px; color: var(--secondary); }
-        .footer-col p { color: #d1d5db; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-        .footer-col i { color: var(--primary); width: 20px; }
-        .footer-bottom { text-align: center; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); color: #9ca3af; font-size: 0.9rem; }
 
-        /* --- RESPONSIVE --- */
+        .btn-organizer {
+            background-color: transparent;
+            color: var(--jmj-white);
+            border: 2px solid var(--jmj-yellow);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 3rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-organizer:hover {
+            background-color: var(--jmj-yellow);
+            color: var(--jmj-black);
+        }
+
+        .footer-banner {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Responsive */
         @media (max-width: 900px) {
-            .split-section, .split-section.reverse { grid-template-columns: 1fr; direction: ltr; gap: 40px; padding: 60px 5%; }
-            .polaroid-img { transform: rotate(0); }
-            .nav-links { display: none; } /* Cache le menu texte sur petit écran */
-            
-            /* Casse la grille parfaite sur mobile pour empiler les photos */
-            .collage-grid { grid-template-columns: 1fr; grid-auto-rows: 250px; }
-            .collage-item:nth-child(1) { grid-column: 1; grid-row: span 2; }
-            .collage-item:nth-child(n+2) { grid-column: 1; grid-row: span 1; }
-            
-            .footer-grid { grid-template-columns: 1fr; text-align: center; }
-            .footer-col p { justify-content: center; }
+            .app-container {
+                flex-direction: column;
+                height: 800px;
+            }
+            .list-container {
+                border-left: none;
+                border-top: 2px solid #eee;
+            }
+            .hero h1 {
+                font-size: 3rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <a href="#">
-            <img src="https://github.com/Cyprdu/PaJe/blob/main/logo%20(1).png?raw=true" alt="EPJ Logo" class="nav-logo">
-        </a>
-        
-        <ul class="nav-links">
-            <li><a href="#concept">Infos</a></li>
-            <li><a href="#galerie">Photos</a></li>
-            <li><a href="#teaser">Teaser</a></li>
-            <li><a href="#programme">Programme</a></li>
-        </ul>
-
-        <a href="https://ecoledeprierejeunes2026-institutionlamartinebelley.venio.fr/fr" target="_blank" class="btn btn-primary" style="padding: 10px 25px; font-size: 0.95rem;">S'inscrire</a>
-    </nav>
-
     <header class="hero">
-        <div class="hero-content" data-aos="zoom-in" data-aos-duration="1200">
-            <img src="https://github.com/Cyprdu/PaJe/blob/main/logo%20(1).png?raw=true" alt="École de Prière des Jeunes" class="hero-logo-img">
-            <a href="https://ecoledeprierejeunes2026-institutionlamartinebelley.venio.fr/fr" target="_blank" class="btn btn-primary" style="margin-top: 20px;">
-                Rejoins l'aventure
-            </a>
-        </div>
+        <img src="https://objectstorage.ap-seoul-1.oraclecloud.com/n/cnkf9bkeu8eq/b/wydseoul-public-resources/o/page/logo_portuguese-20251125153817338.png" alt="Logo JMJ Séoul 2027" class="hero-logo">
+        <h1>En route pour Séoul</h1>
+        <p>Les Journées Mondiales de la Jeunesse 2027 t'attendent. Découvre la culture coréenne, partage ta foi et rejoins des milliers de jeunes du monde entier.</p>
+        <a href="#carte-groupes" class="btn-primary">Trouver mon groupe</a>
     </header>
 
-    <section class="bg-curved big-quote" data-aos="fade-up">
-        <h2 class="title-bold">
-            Nous voulons <span class="highlight">prendre soin</span> de la jeunesse.
-        </h2>
+    <section class="about">
+        <h2>Qu'est-ce que les JMJ ?</h2>
+        <p>Instituées par le pape Jean-Paul II, les Journées Mondiales de la Jeunesse sont le plus grand rassemblement de jeunes au monde. En 2027, c'est la vibrante ville de Séoul, en Corée du Sud, qui nous ouvre ses portes. Prépare-toi à vivre une expérience spirituelle et humaine inoubliable au cœur de l'Asie !</p>
     </section>
 
-    <section id="concept" class="split-section">
-        <div class="split-text" data-aos="fade-right">
-            <span class="section-tag">une vraie pause...</span>
-            <h2 class="title-bold">Une semaine à l'école du Seigneur</h2>
-            <p>Les <strong>Écoles de Prière Jeunes (EPJ)</strong> proposent de venir se mettre à l'écoute de la Parole de Dieu pour grandir dans l'intimité avec Lui, tout en vivant des temps de détente et de fraternité intenses.</p>
-            <p>Nées au Puy-en-Velay en 1983, ces écoles rayonnent aujourd'hui partout en France avec un cocktail spirituel et humain qui a fait ses preuves.</p>
-            
-            <div class="scribble-box">
-                <h3 class="title-bold" style="color: var(--primary); font-size: 2.2rem; margin-bottom: 5px;">200 €</h3>
-                <p style="margin: 0 0 15px; font-size: 0.95rem;">Tout compris pour la semaine !</p>
-                <ul style="list-style: none; font-weight: 500;">
-                    <li style="margin-bottom: 8px;"><i class="fa-solid fa-child-reaching" style="color: var(--primary); margin-right: 10px;"></i> Pour les 7 à 17 ans</li>
-                    <li style="margin-bottom: 8px;"><i class="fa-solid fa-calendar" style="color: var(--primary); margin-right: 10px;"></i> 16 - 22 août 2026</li>
-                    <li><i class="fa-solid fa-location-dot" style="color: var(--primary); margin-right: 10px;"></i> Inst. Lamartine, Belley</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="polaroid-wrapper" data-aos="fade-left">
-            <div class="polaroid-img">
-                <img src="https://github.com/Cyprdu/PaJe/blob/main/img/IMG_1273%20(2024-04-10T17_28_17.611).JPG?raw=true" alt="Partage et conseils">
-                <div class="polaroid-caption">temps de partage et d'écoute</div>
-            </div>
-        </div>
-    </section>
-
-    <section id="galerie" class="collage-section">
-        <div style="text-align: center; max-width: 800px; margin: 0 auto;" data-aos="fade-up">
-            <span class="section-tag">souvenirs</span>
-            <h2 class="title-bold" style="font-size: clamp(2.5rem, 4vw, 3.5rem);">L'Aventure en images</h2>
-        </div>
-
-        <div class="collage-grid">
-            <div class="collage-item large" data-aos="fade-up">
-                <img src="https://github.com/Cyprdu/PaJe/blob/main/img/IMG_0654.JPG?raw=true" alt="Grand Jeu">
-                <div class="collage-overlay">
-                    <h3 class="title-bold">Grand Jeu</h3>
-                    <p>Se dépasser et coopérer tous ensemble sous le soleil !</p>
+    <section id="carte-groupes" class="groups-section">
+        <h2>Les départs en France</h2>
+        <div class="app-container">
+            <div id="map"></div>
+            <div class="list-container" id="group-list">
                 </div>
-            </div>
-            
-            <div class="collage-item" data-aos="fade-up" data-aos-delay="100">
-                <img src="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/DSC00736.jpeg" alt="Louange">
-                <div class="collage-overlay">
-                    <h3 class="title-bold">Louange</h3>
-                    <p>Chanter et prier dans la joie.</p>
-                </div>
-            </div>
-
-            <div class="collage-item" data-aos="fade-up" data-aos-delay="200">
-                <img src="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/8MQTKhaJSqC2ea0H9pNPlA.jpeg" alt="Adoration">
-                <div class="collage-overlay">
-                    <h3 class="title-bold">Adoration</h3>
-                    <p>Un cœur à cœur silencieux.</p>
-                </div>
-            </div>
-
-            <div class="collage-item" data-aos="fade-up" data-aos-delay="300">
-                <img src="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/DSC00667.jpeg" alt="Témoignages">
-                <div class="collage-overlay">
-                    <h3 class="title-bold">Témoignages</h3>
-                    <p>Des parcours qui inspirent.</p>
-                </div>
-            </div>
-
-            <div class="collage-item" data-aos="fade-up" data-aos-delay="400">
-                <img src="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/DSC00582.jpeg" alt="Enseignements">
-                <div class="collage-overlay">
-                    <h3 class="title-bold">Formation</h3>
-                    <p>Comprendre la Parole.</p>
-                </div>
-            </div>
-
-            <div class="collage-item" data-aos="fade-up" data-aos-delay="500">
-                <img src="https://github.com/Cyprdu/PaJe/raw/refs/heads/main/img/A4aBSxjvQFqglyO0Vt9hew.jpeg" alt="Prière personnelle">
-                <div class="collage-overlay">
-                    <h3 class="title-bold">Prière Perso</h3>
-                    <p>Un temps pour méditer.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="teaser" class="video-section">
-        <div data-aos="fade-up">
-            <span class="section-tag" style="color: var(--secondary);">un aperçu...</span>
-            <h2 class="title-bold" style="font-size: clamp(2.5rem, 4vw, 4rem);">Plonge dans l'ambiance</h2>
-        </div>
-        <div class="video-container" data-aos="zoom-in" data-aos-delay="100">
-            <iframe src="https://www.youtube.com/embed/AneAv5ex26M" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-    </section>
-
-    <section id="programme" class="bg-curved presentation-section" style="text-align: center;">
-        <div data-aos="fade-up">
-            <span class="section-tag" style="color: var(--secondary);">au programme</span>
-            <h2 class="title-bold" style="font-size: clamp(2.5rem, 5vw, 4rem);">Une semaine riche</h2>
-        </div>
-        
-        <div class="graphic-container" data-aos="fade-up" data-aos-delay="200">
-            <picture>
-                <source media="(max-width: 768px)" srcset="https://welcometoparadise.fr/wp-content/uploads/elementor/thumbs/FR-ORA-LABORA-MOBILE-ri1c39m4fi7kvi0itr7o58aq8t0bflfvev47ogi1lk.png">
-                <img src="https://welcometoparadise.fr/wp-content/uploads/2026/01/FR-ORA-LABORA-ORDI-2048x719.png" alt="Le programme de la semaine">
-            </picture>
-        </div>
-    </section>
-
-    <section class="split-section reverse">
-        <div class="split-text" data-aos="fade-left">
-            <span class="section-tag">une équipe de feu !</span>
-            <h2 class="title-bold">Sécurité & Confiance</h2>
-            <p>Confier ses enfants est une grande étape. C'est pourquoi notre projet éducatif garantit bienveillance et pédagogie chrétienne, en répondant aux exigences strictes de la charte de l’Association « LE CEP ».</p>
-            
-            <ul style="list-style: none; margin-top: 20px;">
-                <li style="margin-bottom: 15px;"><i class="fa-solid fa-shield-halved" style="color: var(--primary); font-size: 1.2rem; margin-right: 10px;"></i> <strong>Cadre Légal :</strong> Directeurs BAFD et animateurs BAFA.</li>
-                <li><i class="fa-solid fa-hands-holding-child" style="color: var(--primary); font-size: 1.2rem; margin-right: 10px;"></i> <strong>Accompagnement :</strong> Prêtres, sœurs, pros et étudiants dévoués.</li>
-            </ul>
-        </div>
-        
-        <div class="polaroid-wrapper" data-aos="fade-right">
-            <div class="polaroid-img" style="transform: rotate(-2deg);">
-                <img src="https://github.com/Cyprdu/PaJe/blob/main/img/IMG_1283%20(2024-04-10T17_28_20.257).JPG?raw=true" alt="L'équipe d'animateurs">
-                <div class="polaroid-caption">l'équipe d'animation au top !</div>
-            </div>
         </div>
     </section>
 
     <footer>
-        <div class="footer-grid">
-            <div>
-                <img src="https://github.com/Cyprdu/PaJe/blob/main/logo%20(1).png?raw=true" alt="EPJ 2026 Logo" style="height: 60px; margin-bottom: 20px;">
-                <p style="line-height: 1.6;">
-                    Pastorale des Jeunes et des Vocations.<br>
-                    Vivre une semaine à l'école du Seigneur.
-                </p>
-                <a href="https://ecoledeprierejeunes2026-institutionlamartinebelley.venio.fr/fr" target="_blank" class="btn btn-primary" style="margin-top: 20px; padding: 12px 25px;">S'inscrire à l'EPJ</a>
-            </div>
-            
-            <div class="footer-col">
-                <h4 class="title-bold">Contact</h4>
-                <p><i class="fa-solid fa-user"></i> Gaëlle-Marie CIEREN</p>
-                <p><i class="fa-solid fa-phone"></i> 06 23 25 60 49</p>
-                <p><i class="fa-solid fa-envelope"></i> paje.ain@gmail.com</p>
-            </div>
-            
-            <div class="footer-col">
-                <h4 class="title-bold">Lieu & Adresse</h4>
-                <p><i class="fa-solid fa-building"></i> Institution Lamartine</p>
-                <p><i class="fa-solid fa-map-pin"></i> 31, rue Dr Nodet, CS 60154</p>
-                <p><i class="fa-solid fa-city"></i> 01004 Bourg Cedex</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 École de Prière des Jeunes - Diocèse de Belley-Ars. Tous droits réservés.
-        </div>
+        <a href="https://forms.google.com/ton-lien-ici" target="_blank" class="btn-organizer">Je suis organisateur et je demande à être ajouté</a>
+        <img src="https://lille.catholique.fr/app/uploads/sites/43/2025/10/Newsletter-Christ-On-Lille-2025-bas-de-page.png" alt="Bandeau bas de page" class="footer-banner">
     </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Init AOS animations
-        AOS.init({
-            duration: 800,
-            once: true,
-            offset: 50
-        });
-
-        // Navbar opacity on scroll
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+        // --- BASE DE DONNÉES JSON ---
+        const jmjData = [
+            {
+                "id": 1,
+                "nom": "Pèlerinage des Jeunes du Diocèse",
+                "groupe": "Groupe Lyon",
+                "places_disponibles": 150,
+                "url": "https://exemple-lyon.fr",
+                "coords": [45.7640, 4.8357]
+            },
+            {
+                "id": 2,
+                "nom": "Route Saint-Pierre Chanel",
+                "groupe": "Groupe Bourg-en-Bresse",
+                "places_disponibles": 45,
+                "url": "https://exemple-bourg.fr",
+                "coords": [46.2052, 5.2255]
+            },
+            {
+                "id": 3,
+                "nom": "Cap Séoul - Île de France",
+                "groupe": "Groupe Paris",
+                "places_disponibles": 300,
+                "url": "https://exemple-paris.fr",
+                "coords": [48.8566, 2.3522]
+            },
+            {
+                "id": 4,
+                "nom": "Jeunes Cathos de la Méditerranée",
+                "groupe": "Groupe Marseille",
+                "places_disponibles": 120,
+                "url": "https://exemple-marseille.fr",
+                "coords": [43.2965, 5.3698]
             }
+        ];
+
+        // --- INITIALISATION DE LA CARTE ---
+        // On centre la carte sur la France au chargement
+        const map = L.map('map').setView([46.603354, 1.888334], 6);
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20
+        }).addTo(map);
+
+        // --- INJECTION DES DONNÉES (CARTE + LISTE) ---
+        const listContainer = document.getElementById('group-list');
+
+        jmjData.forEach(session => {
+            // 1. Ajouter un marqueur sur la carte
+            const marker = L.marker(session.coords).addTo(map);
+            marker.bindPopup(`<b>${session.groupe}</b><br>${session.nom}<br>${session.places_disponibles} places`);
+
+            // 2. Créer l'élément HTML pour la liste
+            const card = document.createElement('div');
+            card.className = 'group-card';
+            card.innerHTML = `
+                <span class="group-region">${session.groupe}</span>
+                <h3 class="group-title">${session.nom}</h3>
+                <p class="group-places">🎒 ${session.places_disponibles} places restantes</p>
+                <a href="${session.url}" target="_blank">Voir ce groupe</a>
+            `;
+            
+            // Interaction: Cliquer sur la carte centre la map sur le groupe
+            card.addEventListener('click', () => {
+                map.flyTo(session.coords, 10);
+                marker.openPopup();
+            });
+
+            listContainer.appendChild(card);
         });
     </script>
 </body>
