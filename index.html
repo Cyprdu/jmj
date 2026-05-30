@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;700;900&family=Playfair+Display:ital,wght@0,700;1,400&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
   :root {
     --red: #F42736;
@@ -19,7 +20,6 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -29,18 +29,7 @@
     overflow-x: hidden;
   }
 
-  /* ─── NOISE TEXTURE OVERLAY ─── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: .4;
-  }
-
-  /* ─── HEADER / NAV ─── */
+  /* NAV */
   nav {
     position: fixed;
     top: 0; left: 0; right: 0;
@@ -50,53 +39,60 @@
     justify-content: space-between;
     padding: 0 48px;
     height: 72px;
-    background: rgba(250,250,248,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(244,39,54,0.15);
+    background: rgba(250,250,248,0.95);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(244,39,54,0.12);
+    transition: box-shadow .3s;
   }
 
   .nav-logo {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 16px;
   }
 
   .nav-logo img {
-    height: 44px;
+    height: 48px;
     width: auto;
   }
 
-  .nav-badge {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px;
-    letter-spacing: 0.04em;
-    color: var(--red);
-    line-height: 1;
+  .nav-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(0,0,0,0.12);
   }
 
-  .nav-badge span {
+  .nav-tagline {
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #555;
+    letter-spacing: 0.05em;
+  }
+
+  .nav-tagline span {
     display: block;
     font-family: 'Space Grotesk', sans-serif;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    color: #888;
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
+    color: #aaa;
   }
 
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 36px;
+    gap: 32px;
     list-style: none;
   }
 
   .nav-links a {
     text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    color: #444;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: #555;
     text-transform: uppercase;
     transition: color .2s;
   }
@@ -106,91 +102,75 @@
   .nav-cta {
     background: var(--red) !important;
     color: white !important;
-    padding: 10px 22px;
+    padding: 10px 20px;
     border-radius: 4px;
+    letter-spacing: 0.06em !important;
   }
 
-  /* ─── HERO ─── */
+  /* HERO */
   .hero {
     min-height: 100vh;
     background: var(--red);
     position: relative;
     overflow: hidden;
     display: flex;
+    align-items: stretch;
+  }
+
+  .hero-left-col {
+    flex: 1;
+    display: flex;
     align-items: center;
-    padding: 120px 48px 80px;
+    padding: 120px 64px 80px 64px;
+    position: relative;
+    z-index: 2;
   }
 
-  /* Decorative diagonal lines */
-  .hero::before {
-    content: '';
+  .hero-right-col {
+    width: 45%;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .hero-right-col img.hero-crowd {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hero-right-overlay {
     position: absolute;
-    top: -100px; right: -100px;
-    width: 600px; height: 600px;
-    border: 80px solid rgba(255,255,255,0.06);
-    border-radius: 50%;
-    animation: pulse 8s ease-in-out infinite;
+    inset: 0;
+    background: linear-gradient(to right, var(--red) 0%, rgba(244,39,54,0.3) 40%, transparent 100%);
   }
 
-  .hero::after {
-    content: '';
+  /* decorative shapes on hero */
+  .hero-deco {
     position: absolute;
-    bottom: -150px; left: -80px;
-    width: 500px; height: 500px;
-    border: 60px solid rgba(248,231,114,0.08);
-    border-radius: 50%;
-    animation: pulse 10s ease-in-out infinite reverse;
-  }
-
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.08); opacity: 0.6; }
-  }
-
-  .hero-decorlines {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    inset: 0;
     pointer-events: none;
     overflow: hidden;
   }
 
-  .hero-decorlines svg {
-    width: 100%; height: 100%;
-    position: absolute; inset: 0;
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
+  .hero-deco svg {
+    position: absolute;
+    inset: 0;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    gap: 60px;
+    height: 100%;
   }
-
-  .hero-left {}
 
   .hero-eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
     padding: 6px 16px;
     border-radius: 100px;
-    margin-bottom: 32px;
-  }
-
-  .hero-eyebrow span {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--yellow);
+    margin-bottom: 36px;
   }
 
   .hero-eyebrow::before {
@@ -202,50 +182,49 @@
   }
 
   @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    0%,100%{opacity:1} 50%{opacity:0.3}
   }
 
-  .hero-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(72px, 10vw, 130px);
-    line-height: 0.9;
-    color: white;
-    letter-spacing: 0.02em;
-    margin-bottom: 8px;
-  }
-
-  .hero-title-sub {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(40px, 5vw, 72px);
-    line-height: 1;
+  .hero-eyebrow span {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
     color: var(--yellow);
-    letter-spacing: 0.06em;
+  }
+
+  .hero-logo-main {
+    height: 110px;
+    width: auto;
+    display: block;
     margin-bottom: 32px;
+    filter: brightness(0) invert(1);
+    opacity: 0.95;
   }
 
   .hero-korean {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 700;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 0.1em;
-    margin-bottom: 24px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 0.15em;
+    margin-bottom: 20px;
   }
 
   .hero-desc {
     font-size: 17px;
-    line-height: 1.75;
-    color: rgba(255,255,255,0.82);
-    max-width: 480px;
-    margin-bottom: 48px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.85);
+    max-width: 460px;
+    margin-bottom: 44px;
   }
 
   .hero-cta-group {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
     flex-wrap: wrap;
+    margin-bottom: 56px;
   }
 
   .btn-primary {
@@ -254,25 +233,23 @@
     gap: 10px;
     background: var(--yellow);
     color: var(--black);
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 16px 32px;
+    padding: 15px 30px;
     border-radius: 4px;
     border: none;
     cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
     transition: transform .2s, box-shadow .2s;
   }
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.3);
   }
-
-  .btn-primary svg { transition: transform .2s; }
-  .btn-primary:hover svg { transform: translateX(4px); }
 
   .btn-ghost {
     display: inline-flex;
@@ -280,14 +257,15 @@
     gap: 10px;
     background: transparent;
     color: white;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.04em;
     text-decoration: none;
-    padding: 16px 24px;
+    padding: 15px 24px;
     border-radius: 4px;
     border: 1px solid rgba(255,255,255,0.3);
     cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
     transition: background .2s, border-color .2s;
   }
 
@@ -298,57 +276,40 @@
 
   .hero-stats {
     display: flex;
-    gap: 32px;
-    padding-top: 48px;
+    gap: 40px;
+    padding-top: 40px;
     border-top: 1px solid rgba(255,255,255,0.15);
-    margin-top: 48px;
   }
 
   .hero-stat-num {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 42px;
+    font-size: 40px;
     color: white;
     line-height: 1;
   }
 
   .hero-stat-label {
-    font-size: 12px;
-    letter-spacing: 0.1em;
+    font-size: 11px;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: rgba(255,255,255,0.5);
-    margin-top: 4px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 5px;
   }
 
-  .hero-right {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
+  /* Seoul skyline silhouette at bottom of hero */
+  .hero-skyline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 120px;
+    pointer-events: none;
+    z-index: 3;
   }
 
-  .hero-poster {
-    width: 280px;
-    border-radius: 8px;
-    box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
-    animation: float 6s ease-in-out infinite;
-    position: relative;
-    z-index: 2;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(-2deg); }
-    50% { transform: translateY(-16px) rotate(-1deg); }
-  }
-
-  .hero-logo-official {
-    height: 100px;
-    opacity: 0.9;
-    filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3));
-  }
-
-  /* ─── SECTION: C'EST QUOI LES JMJ ─── */
+  /* ─── SECTION JMJ ─── */
   .section-jmj {
-    padding: 120px 48px;
+    padding: 120px 64px;
     background: white;
     position: relative;
     overflow: hidden;
@@ -357,10 +318,10 @@
   .section-jmj::before {
     content: 'JMJ';
     position: absolute;
-    top: -20px; right: -20px;
+    top: -30px; right: -10px;
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 300px;
-    color: rgba(244,39,54,0.04);
+    font-size: 320px;
+    color: rgba(244,39,54,0.03);
     line-height: 1;
     pointer-events: none;
     user-select: none;
@@ -375,13 +336,13 @@
   .section-eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 18px;
   }
 
   .section-eyebrow::before {
     content: '';
-    width: 32px; height: 2px;
+    width: 36px; height: 2px;
     background: var(--red);
   }
 
@@ -395,7 +356,7 @@
 
   .section-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(44px, 5vw, 72px);
+    font-size: clamp(44px, 5vw, 68px);
     line-height: 0.95;
     margin-bottom: 24px;
     letter-spacing: 0.02em;
@@ -412,20 +373,17 @@
     grid-template-columns: 1fr 1fr;
     gap: 80px;
     align-items: start;
-    margin-top: 64px;
+    margin-top: 60px;
   }
 
   .jmj-text p {
-    font-size: 17px;
-    line-height: 1.8;
+    font-size: 16px;
+    line-height: 1.85;
     color: #3a3a3a;
     margin-bottom: 20px;
   }
 
-  .jmj-text p strong {
-    color: var(--red);
-    font-weight: 700;
-  }
+  .jmj-text p strong { color: var(--red); font-weight: 700; }
 
   .jmj-quote {
     margin: 32px 0;
@@ -449,24 +407,27 @@
     font-family: 'Space Grotesk', sans-serif;
     font-size: 13px;
     font-style: normal;
-    color: #888;
+    color: #999;
     margin-top: 12px;
   }
 
   .jmj-cards {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
   }
 
   .jmj-card {
-    padding: 28px;
-    border: 1px solid #eee;
+    padding: 24px 28px;
+    border: 1px solid #ebebeb;
     border-radius: 12px;
     background: var(--off-white);
     transition: border-color .2s, transform .2s;
     position: relative;
     overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
   }
 
   .jmj-card::before {
@@ -482,51 +443,147 @@
   }
 
   .jmj-card:hover::before { transform: scaleY(1); }
-  .jmj-card:hover { border-color: var(--red); transform: translateX(4px); }
+  .jmj-card:hover { border-color: rgba(244,39,54,0.3); transform: translateX(6px); }
 
   .jmj-card-icon {
-    font-size: 28px;
-    margin-bottom: 12px;
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: rgba(244,39,54,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--red);
+    font-size: 20px;
   }
+
+  .jmj-card-body {}
 
   .jmj-card-title {
     font-size: 15px;
     font-weight: 700;
-    margin-bottom: 6px;
-    letter-spacing: 0.03em;
+    margin-bottom: 5px;
+    letter-spacing: 0.02em;
   }
 
   .jmj-card-desc {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
-  /* ─── TIMELINE ─── */
-  .section-timeline {
-    padding: 100px 48px;
+  /* SEOUL SECTION */
+  .section-seoul {
+    padding: 100px 64px;
     background: var(--black);
     position: relative;
     overflow: hidden;
   }
 
-  .section-timeline .section-title { color: white; }
-  .section-timeline .section-eyebrow::before { background: var(--yellow); }
-  .section-timeline .section-eyebrow span { color: var(--yellow); }
+  .section-seoul .section-title { color: white; }
+  .section-seoul .section-eyebrow::before { background: var(--yellow); }
+  .section-seoul .section-eyebrow span { color: var(--yellow); }
 
-  .timeline-deco {
+  .seoul-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 60px;
+  }
+
+  .seoul-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color .2s, transform .2s;
+  }
+
+  .seoul-card:hover {
+    border-color: rgba(244,39,54,0.4);
+    transform: translateY(-4px);
+  }
+
+  .seoul-card-img {
+    height: 180px;
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .seoul-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.85;
+    transition: transform .4s;
+  }
+
+  .seoul-card:hover .seoul-card-img img { transform: scale(1.05); }
+
+  .seoul-card-img-overlay {
     position: absolute;
-    top: 0; right: 0;
-    width: 50%;
-    height: 100%;
-    background: linear-gradient(135deg, transparent 0%, rgba(244,39,54,0.04) 100%);
+    inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 60%);
+  }
+
+  .seoul-card-body {
+    padding: 20px 24px;
+  }
+
+  .seoul-card-tag {
+    display: inline-block;
+    background: rgba(244,39,54,0.15);
+    color: #ff6b6b;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+  }
+
+  .seoul-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 8px;
+  }
+
+  .seoul-card-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.65;
+  }
+
+  /* Seoul big number */
+  .seoul-bg-text {
+    position: absolute;
+    bottom: -40px; right: -20px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 260px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.025);
     pointer-events: none;
+    user-select: none;
+    line-height: 1;
+  }
+
+  /* TIMELINE */
+  .section-timeline {
+    padding: 100px 64px;
+    background: var(--off-white);
+    position: relative;
+    overflow: hidden;
   }
 
   .timeline {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2px;
+    gap: 0;
     margin-top: 64px;
     position: relative;
   }
@@ -534,78 +591,86 @@
   .timeline::before {
     content: '';
     position: absolute;
-    top: 40px; left: 0; right: 0;
+    top: 28px; left: 12.5%; right: 12.5%;
     height: 2px;
-    background: rgba(255,255,255,0.1);
+    background: #e8e8e8;
     z-index: 0;
   }
 
   .timeline-item {
     position: relative;
-    padding: 0 20px;
+    padding: 0 24px;
     padding-top: 64px;
+    text-align: left;
   }
 
   .timeline-dot {
     position: absolute;
-    top: 28px; left: 50%;
+    top: 16px; left: 50%;
     transform: translateX(-50%);
-    width: 24px; height: 24px;
+    width: 26px; height: 26px;
     border-radius: 50%;
     background: var(--red);
     z-index: 1;
-    box-shadow: 0 0 0 4px rgba(244,39,54,0.2);
+    box-shadow: 0 0 0 5px rgba(244,39,54,0.15);
   }
 
   .timeline-date {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 28px;
-    color: var(--yellow);
-    margin-bottom: 8px;
+    font-size: 26px;
+    color: var(--red);
+    margin-bottom: 6px;
+    letter-spacing: 0.03em;
   }
 
   .timeline-label {
     font-size: 14px;
-    font-weight: 600;
-    color: white;
+    font-weight: 700;
+    color: var(--black);
     margin-bottom: 8px;
   }
 
   .timeline-desc {
     font-size: 13px;
-    color: rgba(255,255,255,0.45);
+    color: #888;
     line-height: 1.6;
   }
 
-  /* ─── SECTION GROUPES ─── */
+  /* GROUPES */
   .section-groupes {
-    padding: 120px 48px;
-    background: var(--off-white);
+    padding: 120px 64px;
+    background: white;
   }
 
   .section-groupes-header {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: 64px;
+    margin-bottom: 56px;
+    flex-wrap: wrap;
+    gap: 24px;
   }
 
   .groupes-filters {
     display: flex;
     gap: 8px;
+    align-items: center;
     flex-wrap: wrap;
   }
 
   .filter-btn {
     padding: 8px 18px;
-    border: 1px solid #ddd;
+    border: 1px solid #e0e0e0;
     border-radius: 100px;
     background: white;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     cursor: pointer;
     transition: all .2s;
     font-family: 'Space Grotesk', sans-serif;
+    text-transform: uppercase;
+    color: #666;
   }
 
   .filter-btn.active, .filter-btn:hover {
@@ -621,10 +686,10 @@
   }
 
   .groupe-card {
-    background: white;
+    background: var(--off-white);
     border-radius: 16px;
     overflow: hidden;
-    border: 1px solid #eee;
+    border: 1px solid #e8e8e8;
     transition: box-shadow .25s, transform .25s;
     cursor: pointer;
     text-decoration: none;
@@ -633,13 +698,13 @@
   }
 
   .groupe-card:hover {
-    box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-    transform: translateY(-4px);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.09);
+    transform: translateY(-5px);
   }
 
   .groupe-card-top {
     background: var(--red);
-    padding: 28px 28px 20px;
+    padding: 28px 28px 22px;
     position: relative;
     overflow: hidden;
   }
@@ -647,15 +712,24 @@
   .groupe-card-top::after {
     content: '';
     position: absolute;
-    bottom: -30px; right: -30px;
-    width: 100px; height: 100px;
-    border: 20px solid rgba(255,255,255,0.08);
+    bottom: -32px; right: -32px;
+    width: 110px; height: 110px;
+    border: 22px solid rgba(255,255,255,0.07);
+    border-radius: 50%;
+  }
+
+  .groupe-card-top::before {
+    content: '';
+    position: absolute;
+    top: -20px; right: 60px;
+    width: 70px; height: 70px;
+    border: 14px solid rgba(255,255,255,0.05);
     border-radius: 50%;
   }
 
   .groupe-city {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 32px;
+    font-size: 34px;
     color: white;
     letter-spacing: 0.03em;
     line-height: 1;
@@ -663,88 +737,53 @@
   }
 
   .groupe-name {
-    font-size: 13px;
-    color: rgba(255,255,255,0.7);
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
     font-weight: 400;
+    line-height: 1.4;
   }
 
   .groupe-tag {
     display: inline-block;
-    margin-top: 12px;
+    margin-top: 14px;
     padding: 4px 12px;
-    background: rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.13);
     border-radius: 100px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--yellow);
   }
 
   .groupe-card-bottom {
-    padding: 24px 28px;
+    padding: 22px 28px 24px;
   }
 
-  .groupe-info-row {
+  .groupe-dispo-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
-  .groupe-places {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .places-bar {
-    width: 100px;
-    height: 6px;
-    background: #eee;
-    border-radius: 3px;
-    overflow: hidden;
-  }
-
-  .places-fill {
-    height: 100%;
-    background: var(--red);
-    border-radius: 3px;
-    transition: width 1s ease;
-  }
-
-  .places-text {
-    font-size: 12px;
-    font-weight: 600;
-    color: #444;
+    justify-content: flex-end;
+    margin-bottom: 14px;
   }
 
   .groupe-dispo {
-    font-size: 12px;
-    font-weight: 600;
-    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
     border-radius: 100px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
-  .dispo-ok {
-    background: #e6f4ea;
-    color: #1a7a35;
-  }
-
-  .dispo-peu {
-    background: #fff3e0;
-    color: #e65100;
-  }
-
-  .dispo-complet {
-    background: #fce4e4;
-    color: #c62828;
-  }
+  .dispo-ok { background: #e6f4ea; color: #1a7a35; }
+  .dispo-peu { background: #fff3e0; color: #d84a00; }
+  .dispo-complet { background: #fce4e4; color: #c62828; }
 
   .groupe-desc {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.6;
+    font-size: 13.5px;
+    color: #5a5a5a;
+    line-height: 1.7;
     margin-bottom: 20px;
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -755,25 +794,250 @@
   .groupe-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 13px;
+    gap: 7px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--red);
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.1em;
   }
 
-  .groupe-link svg { transition: transform .2s; }
-  .groupe-card:hover .groupe-link svg { transform: translateX(4px); }
+  .groupe-card:hover .groupe-link i { transform: translateX(4px); }
+  .groupe-link i { transition: transform .2s; font-size: 15px; }
 
-  /* ─── MAP OVERLAY ─── */
+  /* INFOS */
+  .section-infos {
+    padding: 100px 64px;
+    background: var(--off-white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .infos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 60px;
+  }
+
+  .info-card {
+    padding: 36px 30px;
+    border-radius: 16px;
+    background: white;
+    border: 1px solid #e8e8e8;
+    transition: transform .2s, box-shadow .2s;
+  }
+
+  .info-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.07);
+  }
+
+  .info-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    background: rgba(244,39,54,0.07);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--red);
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .info-title {
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .info-text {
+    font-size: 13.5px;
+    color: #666;
+    line-height: 1.75;
+  }
+
+  /* CTA BAND */
+  .section-cta {
+    background: var(--blue);
+    padding: 90px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-cta::before {
+    content: '서울';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 280px;
+    font-weight: 900;
+    color: rgba(255,255,255,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .section-cta h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 4vw, 56px);
+    color: white;
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .section-cta p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.68);
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.75;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 4px;
+    transition: transform .2s, box-shadow .2s;
+    position: relative;
+    z-index: 1;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    color: white;
+    padding: 72px 64px 0;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 60px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .footer-brand-logo {
+    height: 64px;
+    margin-bottom: 24px;
+    opacity: 0.9;
+    filter: brightness(0) invert(1);
+  }
+
+  .footer-desc {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.4);
+    line-height: 1.75;
+    max-width: 340px;
+  }
+
+  .footer-col-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-links a {
+    font-size: 13.5px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color .2s;
+  }
+
+  .footer-links a:hover { color: white; }
+
+  .footer-banner-wrap {
+    padding: 40px 0 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-top: 0;
+  }
+
+  .footer-banner-img {
+    width: 100%;
+    max-width: 680px;
+    opacity: 0.75;
+    display: block;
+  }
+
+  .footer-bottom {
+    padding: 28px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-bottom-text {
+    font-size: 12px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  .btn-organisateur {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 4px;
+    transition: all .2s;
+    font-family: 'Space Grotesk', sans-serif;
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  .btn-organisateur:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border-color: rgba(255,255,255,0.25);
+  }
+
+  /* MAP OVERLAY */
   .map-overlay {
     display: none;
     position: fixed;
     inset: 0;
     z-index: 500;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.65);
+    backdrop-filter: blur(6px);
     align-items: stretch;
   }
 
@@ -784,10 +1048,10 @@
     min-width: 320px;
     background: white;
     height: 100vh;
-    overflow-y: auto;
     display: flex;
     flex-direction: column;
     animation: slideIn .3s ease;
+    flex-shrink: 0;
   }
 
   @keyframes slideIn {
@@ -797,38 +1061,42 @@
 
   .map-container {
     flex: 1;
-    background: #f0f0f0;
     position: relative;
     overflow: hidden;
   }
 
+  #map-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
   .map-panel-header {
-    padding: 24px 28px;
+    padding: 20px 24px;
     border-bottom: 1px solid #eee;
     background: var(--red);
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    flex-shrink: 0;
   }
 
   .map-panel-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 26px;
+    font-size: 24px;
     color: white;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
   }
 
   .map-close {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(255,255,255,0.3);
+    width: 34px; height: 34px;
+    border: 1px solid rgba(255,255,255,0.25);
     background: transparent;
     color: white;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -838,13 +1106,14 @@
   .map-close:hover { background: rgba(255,255,255,0.15); }
 
   .map-panel-search {
-    padding: 20px 24px;
-    border-bottom: 1px solid #eee;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
   }
 
   .map-search-input {
     width: 100%;
-    padding: 12px 16px;
+    padding: 11px 16px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     font-family: 'Space Grotesk', sans-serif;
@@ -858,11 +1127,10 @@
   .map-groupe-list {
     flex: 1;
     overflow-y: auto;
-    padding: 16px 0;
   }
 
   .map-groupe-item {
-    padding: 16px 24px;
+    padding: 14px 20px;
     cursor: pointer;
     transition: background .15s;
     border-bottom: 1px solid #f5f5f5;
@@ -878,12 +1146,13 @@
     font-size: 20px;
     color: var(--red);
     letter-spacing: 0.03em;
+    line-height: 1;
   }
 
   .map-groupe-name {
-    font-size: 13px;
-    color: #555;
-    margin-bottom: 8px;
+    font-size: 12px;
+    color: #777;
+    margin: 3px 0 8px;
   }
 
   .map-groupe-meta {
@@ -892,285 +1161,33 @@
     justify-content: space-between;
   }
 
-  .map-places {
-    font-size: 12px;
-    color: #888;
-  }
-
-  .map-places strong { color: var(--black); }
-
-  .map-btn-visit {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--blue);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    background: rgba(0,71,187,0.08);
-    padding: 4px 12px;
-    border-radius: 4px;
-    transition: background .2s;
-  }
-
-  .map-btn-visit:hover { background: rgba(0,71,187,0.15); }
-
-  /* ─── SECTION INFOS PRATIQUES ─── */
-  .section-infos {
-    padding: 100px 48px;
-    background: white;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .infos-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    margin-top: 60px;
-  }
-
-  .info-card {
-    padding: 40px 32px;
-    border-radius: 16px;
-    background: var(--off-white);
-    border: 1px solid #eee;
-    transition: transform .2s;
-  }
-
-  .info-card:hover { transform: translateY(-4px); }
-
-  .info-icon {
-    font-size: 36px;
-    margin-bottom: 20px;
-  }
-
-  .info-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 12px;
-  }
-
-  .info-text {
-    font-size: 14px;
-    color: #666;
-    line-height: 1.7;
-  }
-
-  /* ─── CTA BAND ─── */
-  .section-cta {
-    background: var(--blue);
-    padding: 80px 48px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .section-cta::before {
-    content: '서울';
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 300px;
-    font-weight: 900;
-    color: rgba(255,255,255,0.04);
-    white-space: nowrap;
-    pointer-events: none;
-    user-select: none;
-  }
-
-  .section-cta h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(36px, 4vw, 60px);
-    color: white;
-    letter-spacing: 0.04em;
-    margin-bottom: 16px;
-  }
-
-  .section-cta p {
-    font-size: 17px;
-    color: rgba(255,255,255,0.7);
-    max-width: 500px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-  }
-
-  .btn-white {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: white;
-    color: var(--blue);
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 16px 32px;
-    border-radius: 4px;
-    transition: transform .2s, box-shadow .2s;
-  }
-
-  .btn-white:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.2);
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--black);
-    color: white;
-    padding: 64px 48px 0;
-  }
-
-  .footer-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 60px;
-    padding-bottom: 48px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-  }
-
-  .footer-brand-logo {
-    height: 60px;
-    margin-bottom: 20px;
-    opacity: 0.9;
-  }
-
-  .footer-desc {
-    font-size: 14px;
-    color: rgba(255,255,255,0.5);
-    line-height: 1.7;
-    max-width: 360px;
-  }
-
-  .footer-col-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 20px;
-  }
-
-  .footer-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .footer-links a {
-    font-size: 14px;
-    color: rgba(255,255,255,0.6);
-    text-decoration: none;
-    transition: color .2s;
-  }
-
-  .footer-links a:hover { color: white; }
-
-  .footer-bottom {
-    padding: 24px 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .footer-bottom-text {
-    font-size: 12px;
-    color: rgba(255,255,255,0.3);
-  }
-
-  .footer-banner-img {
-    width: 100%;
-    max-width: 600px;
-    margin-top: 40px;
-    opacity: 0.85;
-  }
-
-  /* ─── ORGANISATEUR BTN ─── */
-  .btn-organisateur {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: rgba(255,255,255,0.6);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 4px;
-    transition: all .2s;
-  }
-
-  .btn-organisateur:hover {
-    background: rgba(255,255,255,0.12);
-    color: white;
-    border-color: rgba(255,255,255,0.3);
-  }
-
-  /* ─── DECORATIVE SVG ELEMENTS ─── */
-  .deco-zigzag {
-    pointer-events: none;
-    user-select: none;
-  }
-
-  /* ─── SCROLL ANIMATIONS ─── */
+  /* SCROLL REVEAL */
   .reveal {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(28px);
     transition: opacity .7s ease, transform .7s ease;
   }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
+  .reveal.visible { opacity: 1; transform: translateY(0); }
   .reveal-delay-1 { transition-delay: .1s; }
   .reveal-delay-2 { transition-delay: .2s; }
   .reveal-delay-3 { transition-delay: .3s; }
   .reveal-delay-4 { transition-delay: .4s; }
 
-  /* ─── MAP IFRAME ─── */
-  #map-frame {
-    width: 100%;
-    height: 100%;
-    border: none;
-    min-height: 400px;
-  }
-
-  .map-empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 300px;
-    color: #aaa;
-    font-size: 14px;
-    text-align: center;
-    padding: 24px;
-  }
-
-  /* RESPONSIVE */
   @media (max-width: 900px) {
-    nav { padding: 0 24px; }
+    nav { padding: 0 20px; }
     .nav-links { display: none; }
-    .hero { padding: 100px 24px 60px; }
-    .hero-content { grid-template-columns: 1fr; gap: 40px; }
-    .hero-right { display: none; }
-    .section-jmj, .section-groupes, .section-infos { padding: 80px 24px; }
+    .hero { flex-direction: column; min-height: auto; }
+    .hero-left-col { padding: 100px 24px 60px; }
+    .hero-right-col { width: 100%; height: 260px; }
+    .section-jmj, .section-groupes, .section-infos, .section-seoul { padding: 72px 24px; }
     .jmj-grid { grid-template-columns: 1fr; gap: 40px; }
     .timeline { grid-template-columns: 1fr 1fr; }
-    .infos-grid { grid-template-columns: 1fr; }
-    .section-groupes-header { flex-direction: column; align-items: flex-start; gap: 24px; }
-    .footer-top { grid-template-columns: 1fr; gap: 40px; }
-    .map-panel { width: 100%; min-width: 0; }
-    .section-timeline { padding: 80px 24px; }
-    .section-cta { padding: 60px 24px; }
+    .infos-grid, .seoul-grid { grid-template-columns: 1fr; }
+    .section-groupes-header { flex-direction: column; align-items: flex-start; }
+    .footer-top { grid-template-columns: 1fr; gap: 36px; }
+    .map-panel { width: 100%; }
+    .section-timeline, .section-cta { padding: 72px 24px; }
     footer { padding: 48px 24px 0; }
   }
 </style>
@@ -1178,73 +1195,80 @@
 <body>
 
 <!-- NAV -->
-<nav>
+<nav id="main-nav">
   <div class="nav-logo">
     <img src="https://objectstorage.ap-seoul-1.oraclecloud.com/n/cnkf9bkeu8eq/b/wydseoul-public-resources/o/page/logo_portuguese-20251125153817338.png" alt="JMJ 2027 Séoul">
-    <div class="nav-badge">
-      JMJ 2027
-      <span>Séoul · 서울</span>
+    <div class="nav-divider"></div>
+    <div class="nav-tagline">
+      Groupes de pèlerinage
+      <span>France · 서울 2027</span>
     </div>
   </div>
   <ul class="nav-links">
     <li><a href="#jmj">Les JMJ</a></li>
+    <li><a href="#seoul">Séoul</a></li>
     <li><a href="#programme">Programme</a></li>
     <li><a href="#groupes">Groupes</a></li>
-    <li><a href="#infos">Infos pratiques</a></li>
+    <li><a href="#infos">Infos</a></li>
     <li><a href="#groupes" class="nav-cta">Trouver mon groupe →</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-decorlines">
+  <!-- Decorative SVG layer -->
+  <div class="hero-deco">
     <svg viewBox="0 0 1440 900" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Diagonal stripes JMJ style -->
-      <line x1="0" y1="200" x2="400" y2="0" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-      <line x1="0" y1="400" x2="600" y2="0" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-      <line x1="0" y1="600" x2="800" y2="0" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
-      <line x1="200" y1="900" x2="1000" y2="0" stroke="rgba(248,231,114,0.05)" stroke-width="1"/>
-      <line x1="500" y1="900" x2="1200" y2="0" stroke="rgba(248,231,114,0.04)" stroke-width="1"/>
-      <line x1="800" y1="900" x2="1440" y2="200" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
-      <!-- Cross motif -->
-      <g opacity="0.07" transform="translate(1100, 150)">
-        <rect x="-4" y="-60" width="8" height="120" fill="white" rx="4"/>
-        <rect x="-60" y="-4" width="120" height="8" fill="white" rx="4"/>
+      <line x1="0" y1="180" x2="350" y2="0" stroke="rgba(255,255,255,0.06)" stroke-width="1.5"/>
+      <line x1="0" y1="360" x2="550" y2="0" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <line x1="0" y1="540" x2="750" y2="0" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+      <line x1="100" y1="900" x2="900" y2="0" stroke="rgba(248,231,114,0.06)" stroke-width="1"/>
+      <line x1="350" y1="900" x2="1050" y2="0" stroke="rgba(248,231,114,0.04)" stroke-width="1"/>
+      <!-- Cross motifs -->
+      <g opacity="0.08" transform="translate(80, 200)">
+        <rect x="-3" y="-50" width="6" height="100" fill="white" rx="3"/>
+        <rect x="-50" y="-3" width="100" height="6" fill="white" rx="3"/>
       </g>
-      <g opacity="0.05" transform="translate(1300, 500)">
-        <rect x="-3" y="-40" width="6" height="80" fill="white" rx="3"/>
-        <rect x="-40" y="-3" width="80" height="6" fill="white" rx="3"/>
+      <g opacity="0.05" transform="translate(500, 600)">
+        <rect x="-2" y="-35" width="4" height="70" fill="white" rx="2"/>
+        <rect x="-35" y="-2" width="70" height="4" fill="white" rx="2"/>
       </g>
-      <!-- Zigzag bottom -->
-      <polyline points="0,880 80,840 160,880 240,840 320,880 400,840 480,880 560,840 640,880 720,840 800,880 880,840 960,880 1040,840 1120,880 1200,840 1280,880 1360,840 1440,880" fill="none" stroke="rgba(248,231,114,0.12)" stroke-width="2"/>
-      <!-- Circles -->
-      <circle cx="1380" cy="700" r="80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="2"/>
-      <circle cx="1380" cy="700" r="50" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+      <!-- Zigzag bottom band -->
+      <polyline points="0,890 60,860 120,890 180,860 240,890 300,860 360,890 420,860 480,890 540,860 600,890 660,860 720,890 780,860 840,890 900,860 960,890 1020,860 1080,890 1140,860 1200,890 1260,860 1320,890 1380,860 1440,890"
+        fill="none" stroke="rgba(248,231,114,0.1)" stroke-width="2"/>
+      <!-- Decorative ring -->
+      <circle cx="680" cy="200" r="120" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="2" stroke-dasharray="6 8"/>
     </svg>
   </div>
 
-  <div class="hero-content">
-    <div class="hero-left">
+  <div class="hero-left-col">
+    <div>
       <div class="hero-eyebrow">
         <span>Journées Mondiales de la Jeunesse</span>
       </div>
-      <h1 class="hero-title">JMJ<br>2027</h1>
-      <p class="hero-title-sub">SÉOUL</p>
-      <p class="hero-korean">서울 · 세계청년대회 2027</p>
+
+      <img class="hero-logo-main"
+        src="https://objectstorage.ap-seoul-1.oraclecloud.com/n/cnkf9bkeu8eq/b/wydseoul-public-resources/o/page/logo_portuguese-20251125153817338.png"
+        alt="JMJ 2027 Séoul — logo officiel">
+
+      <p class="hero-korean">서울 · 세계청년대회 · 2027</p>
+
       <p class="hero-desc">
-        Rejoignez des millions de jeunes du monde entier à Séoul pour les Journées Mondiales de la Jeunesse 2027. Trouvez votre groupe de pèlerinage et vivez une aventure de foi inoubliable.
+        Rejoignez des millions de jeunes du monde entier à Séoul pour les Journées Mondiales de la Jeunesse 2027. Trouvez votre groupe de pèlerinage et vivez une aventure de foi inoubliable au cœur de la Corée.
       </p>
+
       <div class="hero-cta-group">
         <button class="btn-primary" onclick="openMap()">
+          <i class="ti ti-map-pin"></i>
           Trouver un groupe
-          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-          </svg>
+          <i class="ti ti-arrow-right"></i>
         </button>
         <a href="#jmj" class="btn-ghost">
+          <i class="ti ti-info-circle"></i>
           En savoir plus
         </a>
       </div>
+
       <div class="hero-stats">
         <div>
           <div class="hero-stat-num">500K+</div>
@@ -1255,79 +1279,188 @@
           <div class="hero-stat-label">Pays représentés</div>
         </div>
         <div>
-          <div class="hero-stat-num">Juil.<br><span style="font-size:28px">2027</span></div>
+          <div class="hero-stat-num">Été<br><span style="font-size:28px">2027</span></div>
           <div class="hero-stat-label">Date estimée</div>
         </div>
       </div>
     </div>
-    <div class="hero-right">
-      <img class="hero-poster" src="https://objectstorage.ap-seoul-1.oraclecloud.com/n/cnkf9bkeu8eq/b/wydseoul-public-resources/o/page/logo_portuguese-20251125153817338.png" alt="Logo JMJ Séoul 2027">
-    </div>
+  </div>
+
+  <div class="hero-right-col">
+    <img class="hero-crowd"
+      src="https://fr.zenit.org/wp-content/uploads/sites/4/2023/08/deibut-des-jmj-jmj.jpg"
+      alt="Foule des JMJ">
+    <div class="hero-right-overlay"></div>
+  </div>
+
+  <!-- Seoul skyline SVG silhouette -->
+  <div class="hero-skyline">
+    <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- N Seoul Tower -->
+      <rect x="700" y="20" width="4" height="100" fill="rgba(255,255,255,0.08)"/>
+      <rect x="694" y="55" width="16" height="8" fill="rgba(255,255,255,0.08)"/>
+      <polygon points="702,20 698,40 706,40" fill="rgba(255,255,255,0.1)"/>
+      <!-- Lotte World Tower simplified -->
+      <polygon points="820,15 815,120 825,120" fill="rgba(255,255,255,0.07)"/>
+      <!-- Gyeongbokgung style rooftop left -->
+      <rect x="100" y="60" width="80" height="50" fill="rgba(255,255,255,0.05)"/>
+      <polygon points="90,60 140,30 190,60" fill="rgba(255,255,255,0.07)"/>
+      <!-- Generic buildings -->
+      <rect x="200" y="70" width="30" height="50" fill="rgba(255,255,255,0.04)"/>
+      <rect x="240" y="50" width="20" height="70" fill="rgba(255,255,255,0.04)"/>
+      <rect x="270" y="65" width="25" height="55" fill="rgba(255,255,255,0.03)"/>
+      <rect x="350" y="55" width="35" height="65" fill="rgba(255,255,255,0.04)"/>
+      <rect x="395" y="45" width="22" height="75" fill="rgba(255,255,255,0.04)"/>
+      <rect x="425" y="60" width="28" height="60" fill="rgba(255,255,255,0.03)"/>
+      <rect x="850" y="55" width="40" height="65" fill="rgba(255,255,255,0.04)"/>
+      <rect x="900" y="40" width="25" height="80" fill="rgba(255,255,255,0.04)"/>
+      <rect x="935" y="62" width="30" height="58" fill="rgba(255,255,255,0.03)"/>
+      <rect x="1050" y="50" width="28" height="70" fill="rgba(255,255,255,0.04)"/>
+      <rect x="1090" y="38" width="18" height="82" fill="rgba(255,255,255,0.04)"/>
+      <rect x="1200" y="58" width="35" height="62" fill="rgba(255,255,255,0.04)"/>
+      <rect x="1245" y="45" width="22" height="75" fill="rgba(255,255,255,0.03)"/>
+      <rect x="1280" y="65" width="28" height="55" fill="rgba(255,255,255,0.03)"/>
+    </svg>
   </div>
 </section>
 
-<!-- SECTION JMJ -->
+<!-- C'EST QUOI LES JMJ -->
 <section class="section-jmj" id="jmj">
   <div class="container">
-    <div class="section-eyebrow">
-      <span>Comprendre</span>
-    </div>
+    <div class="section-eyebrow"><span>Comprendre</span></div>
     <h2 class="section-title">C'est quoi les <em>JMJ ?</em></h2>
 
     <div class="jmj-grid">
       <div class="jmj-text reveal">
         <p>Les <strong>Journées Mondiales de la Jeunesse</strong> sont une rencontre internationale de jeunes catholiques organisée à l'initiative du Pape. Depuis leur création par Jean-Paul II en 1985, elles réunissent des millions de jeunes tous les 2 à 3 ans dans une ville du monde.</p>
-
         <p>Chaque édition est une expérience unique : <strong>catéchèses, témoignages, concerts, processions aux flambeaux</strong>, et une grande messe finale avec le Saint-Père qui rassemble des centaines de milliers de pèlerins.</p>
-
         <div class="jmj-quote">
           <p>« N'ayez pas peur d'être saints ! »</p>
           <cite>— Jean-Paul II, lors des premières JMJ</cite>
         </div>
-
-        <p>En 2027, c'est <strong>Séoul, en Corée du Sud</strong>, qui accueillera cet événement exceptionnel. Une première en Asie du Nord-Est, dans un pays où le catholicisme est en plein essor et profondément ancré dans la culture.</p>
+        <p>En 2027, c'est <strong>Séoul, en Corée du Sud</strong>, qui accueillera cet événement exceptionnel — une première en Asie du Nord-Est, dans un pays où le catholicisme est en plein essor.</p>
       </div>
 
       <div class="jmj-cards">
         <div class="jmj-card reveal reveal-delay-1">
-          <div class="jmj-card-icon">✝️</div>
-          <div class="jmj-card-title">Foi & spiritualité</div>
-          <div class="jmj-card-desc">Des temps forts de prière, catéchèses avec des évêques du monde entier, adoration eucharistique et sacrements.</div>
+          <div class="jmj-card-icon"><i class="ti ti-cross" aria-hidden="true"></i></div>
+          <div class="jmj-card-body">
+            <div class="jmj-card-title">Foi & spiritualité</div>
+            <div class="jmj-card-desc">Des temps forts de prière, catéchèses avec des évêques du monde entier, adoration eucharistique et sacrements.</div>
+          </div>
         </div>
         <div class="jmj-card reveal reveal-delay-2">
-          <div class="jmj-card-icon">🌍</div>
-          <div class="jmj-card-title">Fraternité universelle</div>
-          <div class="jmj-card-desc">Plus de 160 pays, toutes cultures confondues, réunis autour d'une même foi. La plus grande rencontre de jeunes au monde.</div>
+          <div class="jmj-card-icon"><i class="ti ti-world" aria-hidden="true"></i></div>
+          <div class="jmj-card-body">
+            <div class="jmj-card-title">Fraternité universelle</div>
+            <div class="jmj-card-desc">Plus de 160 pays, toutes cultures confondues, réunis autour d'une même foi. La plus grande rencontre de jeunes au monde.</div>
+          </div>
         </div>
         <div class="jmj-card reveal reveal-delay-3">
-          <div class="jmj-card-icon">🎉</div>
-          <div class="jmj-card-title">Fête & rencontres</div>
-          <div class="jmj-card-desc">Concerts, village des nations, nuits de louange, échanges interculturels dans la dynamique et joyeuse ville de Séoul.</div>
+          <div class="jmj-card-icon"><i class="ti ti-music" aria-hidden="true"></i></div>
+          <div class="jmj-card-body">
+            <div class="jmj-card-title">Fête & rencontres</div>
+            <div class="jmj-card-desc">Concerts, village des nations, nuits de louange, échanges interculturels dans la dynamique et joyeuse ville de Séoul.</div>
+          </div>
         </div>
         <div class="jmj-card reveal reveal-delay-4">
-          <div class="jmj-card-icon">🇰🇷</div>
-          <div class="jmj-card-title">Séoul, ville hôte</div>
-          <div class="jmj-card-desc">Capitale technologique et culturelle, Séoul allie modernité et histoire millénaire. Une destination de rêve pour ce pèlerinage.</div>
+          <div class="jmj-card-icon"><i class="ti ti-building-arch" aria-hidden="true"></i></div>
+          <div class="jmj-card-body">
+            <div class="jmj-card-title">Séoul, ville hôte</div>
+            <div class="jmj-card-desc">Capitale technologique et culturelle, Séoul allie modernité et histoire millénaire — une destination de rêve pour ce pèlerinage.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</section>
 
-  <!-- Deco -->
-  <svg style="position:absolute;bottom:0;right:0;width:300px;opacity:.03;pointer-events:none" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" class="deco-zigzag">
-    <polyline points="0,150 25,100 50,150 75,100 100,150 125,100 150,150 175,100 200,150 225,100 250,150 275,100 300,150" fill="none" stroke="#F42736" stroke-width="8"/>
-    <polyline points="0,200 25,150 50,200 75,150 100,200 125,150 150,200 175,150 200,200 225,150 250,200 275,150 300,200" fill="none" stroke="#F42736" stroke-width="8"/>
-    <polyline points="0,250 25,200 50,250 75,200 100,250 125,200 150,250 175,200 200,250 225,200 250,250 275,200 300,250" fill="none" stroke="#F42736" stroke-width="8"/>
+<!-- SÉOUL -->
+<section class="section-seoul" id="seoul">
+  <div class="container" style="position:relative;z-index:2">
+    <div class="section-eyebrow"><span>La ville hôte</span></div>
+    <h2 class="section-title">Découvrir <em style="color:var(--yellow);font-family:'Playfair Display',serif;font-style:italic">Séoul</em></h2>
+
+    <div class="seoul-grid">
+      <div class="seoul-card reveal">
+        <div class="seoul-card-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Gyeongbokgung_palace_korea.jpg/800px-Gyeongbokgung_palace_korea.jpg"
+            alt="Palais Gyeongbokgung" onerror="this.parentElement.style.background='rgba(244,39,54,0.15)'">
+          <div class="seoul-card-img-overlay"></div>
+        </div>
+        <div class="seoul-card-body">
+          <div class="seoul-card-tag">Patrimoine</div>
+          <div class="seoul-card-title">Palais Gyeongbokgung</div>
+          <div class="seoul-card-desc">Joyau de la dynastie Joseon, ce palais royal du XIVe siècle trône au cœur de Séoul, entouré de montagnes et de cerisiers.</div>
+        </div>
+      </div>
+
+      <div class="seoul-card reveal reveal-delay-1">
+        <div class="seoul-card-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/N_Seoul_Tower_2014.jpg/600px-N_Seoul_Tower_2014.jpg"
+            alt="N Seoul Tower" onerror="this.parentElement.style.background='rgba(0,71,187,0.15)'">
+          <div class="seoul-card-img-overlay"></div>
+        </div>
+        <div class="seoul-card-body">
+          <div class="seoul-card-tag">Panorama</div>
+          <div class="seoul-card-title">Tour N Seoul</div>
+          <div class="seoul-card-desc">À 480 m d'altitude sur le mont Namsan, la tour emblématique de Séoul offre une vue à 360° sur l'immense métropole de 10 millions d'habitants.</div>
+        </div>
+      </div>
+
+      <div class="seoul-card reveal reveal-delay-2">
+        <div class="seoul-card-img">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Bukchon_Hanok_Village_in_Seoul%2C_South_Korea.jpg/800px-Bukchon_Hanok_Village_in_Seoul%2C_South_Korea.jpg"
+            alt="Village Bukchon Hanok" onerror="this.parentElement.style.background='rgba(248,231,114,0.15)'">
+          <div class="seoul-card-img-overlay"></div>
+        </div>
+        <div class="seoul-card-body">
+          <div class="seoul-card-tag">Culture</div>
+          <div class="seoul-card-title">Village Bukchon Hanok</div>
+          <div class="seoul-card-desc">Un quartier préservé aux ruelles pavées, bordé de maisons traditionnelles hanok — un voyage dans le temps en plein cœur de la capitale.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seoul facts band -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:48px;border-radius:12px;overflow:hidden">
+      <div style="background:rgba(255,255,255,0.04);padding:28px 24px;border:1px solid rgba(255,255,255,0.07)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--yellow);margin-bottom:6px">9,7M</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">Habitants</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);padding:28px 24px;border:1px solid rgba(255,255,255,0.07)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--yellow);margin-bottom:6px">600 ans</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">D'histoire</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);padding:28px 24px;border:1px solid rgba(255,255,255,0.07)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--yellow);margin-bottom:6px">11%</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">Catholiques en Corée</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);padding:28px 24px;border:1px solid rgba(255,255,255,0.07)">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--yellow);margin-bottom:6px">~12h</div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.1em">De vol depuis Paris</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="seoul-bg-text">서울</div>
+
+  <!-- Seoul decorative SVG -->
+  <svg style="position:absolute;top:32px;right:40px;opacity:.06;pointer-events:none;width:180px" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="90" cy="90" r="80" fill="none" stroke="white" stroke-width="1.5" stroke-dasharray="6 6"/>
+    <circle cx="90" cy="90" r="55" fill="none" stroke="white" stroke-width="1" stroke-dasharray="3 9"/>
+    <line x1="90" y1="10" x2="90" y2="170" stroke="white" stroke-width="0.8"/>
+    <line x1="10" y1="90" x2="170" y2="90" stroke="white" stroke-width="0.8"/>
+    <line x1="33" y1="33" x2="147" y2="147" stroke="white" stroke-width="0.5"/>
+    <line x1="147" y1="33" x2="33" y2="147" stroke="white" stroke-width="0.5"/>
   </svg>
 </section>
 
 <!-- TIMELINE -->
 <section class="section-timeline" id="programme">
   <div class="container">
-    <div class="section-eyebrow">
-      <span>Programme</span>
-    </div>
-    <h2 class="section-title" style="color:white">Le <em style="color:var(--yellow);font-family:'Playfair Display',serif;font-style:italic">calendrier</em><br>à retenir</h2>
+    <div class="section-eyebrow"><span>Programme</span></div>
+    <h2 class="section-title">Le <em>calendrier</em><br>à retenir</h2>
     <div class="timeline">
       <div class="timeline-item reveal">
         <div class="timeline-dot"></div>
@@ -1339,29 +1472,27 @@
         <div class="timeline-dot"></div>
         <div class="timeline-date">Juin 2026</div>
         <div class="timeline-label">JMJ diocésaines</div>
-        <div class="timeline-desc">Préparation spirituelle dans vos diocèses respectifs</div>
+        <div class="timeline-desc">Préparation spirituelle dans vos diocèses respectifs partout en France</div>
       </div>
       <div class="timeline-item reveal reveal-delay-2">
         <div class="timeline-dot"></div>
         <div class="timeline-date">Juil. 2027</div>
         <div class="timeline-label">JMJ — Séoul</div>
-        <div class="timeline-desc">La grande semaine internationale à Séoul avec le Pape François</div>
+        <div class="timeline-desc">La grande semaine internationale à Séoul avec le Saint-Père</div>
       </div>
       <div class="timeline-item reveal reveal-delay-3">
-        <div class="timeline-dot" style="background:var(--yellow);box-shadow:0 0 0 4px rgba(248,231,114,0.2)"></div>
-        <div class="timeline-date" style="color:white">Messe<br>Finale</div>
+        <div class="timeline-dot" style="background:var(--yellow);box-shadow:0 0 0 5px rgba(248,231,114,0.2)"></div>
+        <div class="timeline-date" style="color:#222">Messe finale</div>
         <div class="timeline-label">Célébration avec le Pape</div>
         <div class="timeline-desc">La grande messe de clôture rassemblant des centaines de milliers de pèlerins</div>
       </div>
     </div>
   </div>
 
-  <!-- SVG deco -->
-  <svg style="position:absolute;top:40px;right:40px;opacity:.06;pointer-events:none;width:200px" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="100" cy="100" r="90" fill="none" stroke="white" stroke-width="2" stroke-dasharray="8 6"/>
-    <circle cx="100" cy="100" r="60" fill="none" stroke="white" stroke-width="1.5" stroke-dasharray="4 8"/>
-    <line x1="100" y1="10" x2="100" y2="190" stroke="white" stroke-width="1"/>
-    <line x1="10" y1="100" x2="190" y2="100" stroke="white" stroke-width="1"/>
+  <!-- zigzag deco -->
+  <svg style="position:absolute;bottom:0;left:0;right:0;pointer-events:none;opacity:.04" viewBox="0 0 1440 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="0,20 40,5 80,20 120,5 160,20 200,5 240,20 280,5 320,20 360,5 400,20 440,5 480,20 520,5 560,20 600,5 640,20 680,5 720,20 760,5 800,20 840,5 880,20 920,5 960,20 1000,5 1040,20 1080,5 1120,20 1160,5 1200,20 1240,5 1280,20 1320,5 1360,20 1400,5 1440,20"
+      fill="none" stroke="#F42736" stroke-width="4"/>
   </svg>
 </section>
 
@@ -1370,86 +1501,85 @@
   <div class="container">
     <div class="section-groupes-header">
       <div>
-        <div class="section-eyebrow">
-          <span>Groupes de pèlerinage</span>
-        </div>
+        <div class="section-eyebrow"><span>Groupes de pèlerinage</span></div>
         <h2 class="section-title">Rejoignez <em>votre groupe</em></h2>
       </div>
-      <div style="text-align:right">
-        <p style="font-size:14px;color:#888;margin-bottom:12px">Filtrer par disponibilité</p>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:14px">
         <div class="groupes-filters">
           <button class="filter-btn active" onclick="filterGroupes('all', this)">Tous</button>
           <button class="filter-btn" onclick="filterGroupes('dispo', this)">Places disponibles</button>
           <button class="filter-btn" onclick="filterGroupes('peu', this)">Quelques places</button>
+          <button class="filter-btn" onclick="filterGroupes('complet', this)">Complet</button>
         </div>
-        <button class="btn-primary" style="margin-top:16px;font-size:13px;padding:12px 24px" onclick="openMap()">
-          🗺️ Voir sur une carte
+        <button class="btn-primary" style="font-size:12px;padding:12px 22px" onclick="openMap()">
+          <i class="ti ti-map"></i>
+          Voir sur une carte
         </button>
       </div>
     </div>
 
-    <div class="groupes-grid" id="groupes-grid">
-      <!-- Cards injected by JS -->
-    </div>
+    <div class="groupes-grid" id="groupes-grid"></div>
   </div>
 </section>
 
 <!-- INFOS PRATIQUES -->
 <section class="section-infos" id="infos">
   <div class="container">
-    <div class="section-eyebrow">
-      <span>Infos pratiques</span>
-    </div>
+    <div class="section-eyebrow"><span>Infos pratiques</span></div>
     <h2 class="section-title">Tout ce qu'il faut<br><em>savoir</em></h2>
 
     <div class="infos-grid">
       <div class="info-card reveal">
-        <div class="info-icon">✈️</div>
+        <div class="info-icon"><i class="ti ti-plane" aria-hidden="true"></i></div>
         <div class="info-title">Voyager à Séoul</div>
-        <div class="info-text">Séoul est desservie depuis les grands aéroports français (Paris CDG, Lyon, Marseille). Vols directs Air France ou Korean Air. Prévoir environ 12h de vol. Pensez à vérifier les formalités visa bien en amont.</div>
+        <div class="info-text">Séoul est desservie depuis Paris CDG, Lyon et Marseille. Vols directs Air France ou Korean Air. Compter environ 12h de vol. Vérifiez les formalités visa (ESTA-K) bien en amont.</div>
       </div>
       <div class="info-card reveal reveal-delay-1">
-        <div class="info-icon">📋</div>
+        <div class="info-icon"><i class="ti ti-clipboard-list" aria-hidden="true"></i></div>
         <div class="info-title">Inscription aux JMJ</div>
-        <div class="info-text">L'inscription se fait via votre groupe diocésain ou un groupe agréé. Chaque groupe gère ses propres modalités d'inscription, de paiement et de préparation spirituelle. Rejoignez un groupe dès maintenant !</div>
+        <div class="info-text">L'inscription se fait via votre groupe diocésain agréé. Chaque groupe gère ses propres modalités d'inscription, de paiement et de préparation spirituelle. Rejoignez un groupe dès maintenant !</div>
       </div>
       <div class="info-card reveal reveal-delay-2">
-        <div class="info-icon">🏨</div>
+        <div class="info-icon"><i class="ti ti-home" aria-hidden="true"></i></div>
         <div class="info-title">Hébergement</div>
-        <div class="info-text">L'hébergement est généralement organisé chez l'habitant ou en hébergement collectif (gymnases, salles paroissiales...) via les familles d'accueil coréennes, dans la tradition JMJ. Les groupes gèrent ce volet.</div>
+        <div class="info-text">Chez l'habitant ou en hébergement collectif (gymnases, salles paroissiales) via les familles d'accueil coréennes, dans la grande tradition JMJ. Les groupes gèrent entièrement ce volet.</div>
       </div>
       <div class="info-card reveal reveal-delay-3">
-        <div class="info-icon">💰</div>
+        <div class="info-icon"><i class="ti ti-coins" aria-hidden="true"></i></div>
         <div class="info-title">Budget estimé</div>
-        <div class="info-text">Comptez entre 2 500 € et 4 000 € selon le groupe, incluant le transport, l'hébergement, les repas et le badge JMJ. Des aides diocésaines et subventions existent pour faciliter l'accès.</div>
+        <div class="info-text">Comptez entre 2 500 € et 4 000 € selon le groupe, incluant transport, hébergement, repas et badge JMJ. Des aides diocésaines et subventions existent pour faciliter l'accès à tous.</div>
       </div>
       <div class="info-card reveal reveal-delay-4">
-        <div class="info-icon">🙏</div>
+        <div class="info-icon"><i class="ti ti-pray" aria-hidden="true"></i></div>
         <div class="info-title">Préparation spirituelle</div>
-        <div class="info-text">Chaque groupe propose un parcours de préparation sur plusieurs mois. Des rencontres, retraites, et les JMJ diocésaines vous prépareront à cette rencontre exceptionnelle avec l'Église universelle.</div>
+        <div class="info-text">Chaque groupe propose un parcours de préparation sur plusieurs mois : rencontres, retraites, JMJ diocésaines. Un chemin de foi pour arriver prêts à cette rencontre de l'Église universelle.</div>
       </div>
       <div class="info-card reveal">
-        <div class="info-icon">📱</div>
+        <div class="info-icon"><i class="ti ti-device-mobile" aria-hidden="true"></i></div>
         <div class="info-title">Application officielle</div>
-        <div class="info-text">L'application JMJ 2027 sera disponible courant 2026. Elle permettra de gérer votre badge, consulter le programme et naviguer dans Séoul. Site officiel : <a href="https://jmj2027.fr" style="color:var(--red);font-weight:600">jmj2027.fr</a></div>
+        <div class="info-text">L'application JMJ 2027 sera disponible courant 2026 pour gérer votre badge et consulter le programme. Site officiel : <a href="https://jmj2027.fr" style="color:var(--red);font-weight:600">jmj2027.fr</a></div>
       </div>
     </div>
   </div>
 
-  <!-- Deco -->
-  <svg style="position:absolute;bottom:-20px;left:0;width:250px;opacity:.04;pointer-events:none" viewBox="0 0 250 150" xmlns="http://www.w3.org/2000/svg">
-    <polyline points="0,75 20,50 40,75 60,50 80,75 100,50 120,75 140,50 160,75 180,50 200,75 220,50 250,75" fill="none" stroke="#F42736" stroke-width="6"/>
+  <!-- deco -->
+  <svg style="position:absolute;top:60px;right:0;width:220px;opacity:.035;pointer-events:none" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+    <rect x="10" y="10" width="200" height="200" rx="8" fill="none" stroke="#F42736" stroke-width="3"/>
+    <rect x="30" y="30" width="160" height="160" rx="4" fill="none" stroke="#F42736" stroke-width="2"/>
+    <line x1="10" y1="110" x2="210" y2="110" stroke="#F42736" stroke-width="1.5"/>
+    <line x1="110" y1="10" x2="110" y2="210" stroke="#F42736" stroke-width="1.5"/>
   </svg>
 </section>
 
-<!-- CTA BAND -->
+<!-- CTA ORGANISATEUR -->
 <section class="section-cta">
   <div style="position:relative;z-index:2">
     <h2>Vous êtes organisateur ?</h2>
     <p>Vous organisez un groupe de pèlerinage pour les JMJ 2027 et souhaitez apparaître sur cette plateforme ? Faites-le nous savoir !</p>
-    <a href="#" class="btn-white" id="organisateur-btn" onclick="handleOrganistaeur(event)">
-      Je demande à être ajouté sur ce site →
-    </a>
+    <button class="btn-white" onclick="handleOrganisateur(event)">
+      <i class="ti ti-plus" style="color:var(--blue)"></i>
+      Je demande à être ajouté sur ce site
+    </button>
   </div>
 </section>
 
@@ -1457,10 +1587,9 @@
 <footer>
   <div class="footer-top container">
     <div>
-      <img src="https://objectstorage.ap-seoul-1.oraclecloud.com/n/cnkf9bkeu8eq/b/wydseoul-public-resources/o/page/logo_portuguese-20251125153817338.png" alt="JMJ 2027" class="footer-brand-logo">
-      <p class="footer-desc">
-        Site non officiel dédié aux groupes de pèlerinage français pour les Journées Mondiales de la Jeunesse 2027 à Séoul, Corée du Sud.
-      </p>
+      <img src="https://objectstorage.ap-seoul-1.oraclecloud.com/n/cnkf9bkeu8eq/b/wydseoul-public-resources/o/page/logo_portuguese-20251125153817338.png"
+        alt="JMJ 2027" class="footer-brand-logo">
+      <p class="footer-desc">Site non officiel dédié aux groupes de pèlerinage français pour les Journées Mondiales de la Jeunesse 2027 à Séoul, Corée du Sud.</p>
     </div>
     <div>
       <div class="footer-col-title">Liens utiles</div>
@@ -1474,25 +1603,24 @@
     <div>
       <div class="footer-col-title">Organisateurs</div>
       <ul class="footer-links">
-        <li><a href="#" onclick="handleOrganistaeur(event)">Ajouter mon groupe</a></li>
-        <li><a href="#groupes">Mettre à jour</a></li>
+        <li><a href="#" onclick="handleOrganisateur(event)">Ajouter mon groupe</a></li>
         <li><a href="mailto:contact@jmj2027-groupes.fr">Nous contacter</a></li>
       </ul>
     </div>
   </div>
 
-  <div class="container">
+  <div class="container footer-banner-wrap">
     <img src="https://lille.catholique.fr/app/uploads/sites/43/2025/10/Newsletter-Christ-On-Lille-2025-bas-de-page.png"
-         alt="Eglise de France"
-         class="footer-banner-img"
-         onerror="this.style.display='none'">
+      alt="Eglise catholique" class="footer-banner-img"
+      onerror="this.style.display='none'">
   </div>
 
   <div class="footer-bottom container">
-    <p class="footer-bottom-text">© 2025 JMJ 2027 Groupes France — Site réalisé avec ❤️ pour les jeunes pèlerins</p>
-    <a href="#" class="btn-organisateur" onclick="handleOrganistaeur(event)">
-      + Je suis organisateur et je demande à être ajouté
-    </a>
+    <p class="footer-bottom-text">© 2025 JMJ 2027 Groupes France — Site réalisé avec soin pour les jeunes pèlerins</p>
+    <button class="btn-organisateur" onclick="handleOrganisateur(event)">
+      <i class="ti ti-plus" style="font-size:13px"></i>
+      Je suis organisateur — être ajouté sur ce site
+    </button>
   </div>
 </footer>
 
@@ -1500,186 +1628,56 @@
 <div class="map-overlay" id="map-overlay" onclick="closeMapOnBg(event)">
   <div class="map-panel" id="map-panel">
     <div class="map-panel-header">
-      <div class="map-panel-title">Groupes de pèlerinage</div>
-      <button class="map-close" onclick="closeMap()">✕</button>
+      <div class="map-panel-title">
+        <i class="ti ti-map-pin" style="font-size:18px;vertical-align:-2px;margin-right:6px"></i>
+        Groupes de pèlerinage
+      </div>
+      <button class="map-close" onclick="closeMap()" aria-label="Fermer">
+        <i class="ti ti-x"></i>
+      </button>
     </div>
     <div class="map-panel-search">
-      <input type="text" class="map-search-input" placeholder="Rechercher une ville..." oninput="searchGroupes(this.value)" id="map-search">
+      <input type="text" class="map-search-input" placeholder="Rechercher une ville ou région..." oninput="searchGroupes(this.value)" id="map-search">
     </div>
-    <div class="map-groupe-list" id="map-groupe-list">
-      <!-- injected -->
-    </div>
+    <div class="map-groupe-list" id="map-groupe-list"></div>
   </div>
   <div class="map-container">
-    <iframe id="map-frame"
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12392148.16!2d3.4!3d46.2!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd54a02933785731%3A0x6bfd3f96c747d9f7!2sFrance!5e0!3m2!1sfr!2sfr!4v1"
-      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
+    <iframe id="map-frame" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
   </div>
 </div>
 
 <script>
 // ─── DATA JSON ───
 const groupes = [
-  {
-    id: 1,
-    ville: "Lyon",
-    nom: "Groupe Lyon – Archidiocèse de Lyon",
-    places: 45,
-    placesMax: 60,
-    description: "Groupe de pèlerinage organisé par le Pastorale des jeunes du diocèse de Lyon. Préparation spirituelle sur 18 mois, accompagnement d'un prêtre et d'animateurs. Départ depuis Lyon-Saint-Exupéry.",
-    url: "https://jeunes.lyon.catholique.fr/jmj2027",
-    lat: 45.7640,
-    lng: 4.8357,
-    region: "Auvergne-Rhône-Alpes"
-  },
-  {
-    id: 2,
-    ville: "Paris",
-    nom: "Groupe Paris Notre-Dame",
-    places: 120,
-    placesMax: 200,
-    description: "Grand groupe parisien organisé par le Service Diocésain de la Pastorale des Jeunes (SDPJ) de Paris. Accompagnement spirituel riche, programme culturel à Séoul inclus.",
-    url: "https://paris.catholique.fr/jmj2027",
-    lat: 48.8566,
-    lng: 2.3522,
-    region: "Île-de-France"
-  },
-  {
-    id: 3,
-    ville: "Marseille",
-    nom: "Groupe Marseille – Diocèse de Marseille",
-    places: 8,
-    placesMax: 40,
-    description: "Groupe méditerranéen organisé depuis Marseille, avec départ depuis l'aéroport Marseille-Provence. Quelques places restantes, dépêchez-vous !",
-    url: "https://marseille.catholique.fr",
-    lat: 43.2965,
-    lng: 5.3698,
-    region: "PACA"
-  },
-  {
-    id: 4,
-    ville: "Nantes",
-    nom: "Groupe Nantes Jeunes en Mission",
-    places: 35,
-    placesMax: 50,
-    description: "Groupe organisé par les Jeunes en Mission du diocèse de Nantes. Un voyage imprégné d'esprit missionnaire et de joie !",
-    url: "https://nantes.catholique.fr/jmj",
-    lat: 47.2184,
-    lng: -1.5536,
-    region: "Pays de la Loire"
-  },
-  {
-    id: 5,
-    ville: "Toulouse",
-    nom: "Groupe Toulouse – La Croix du Sud",
-    places: 0,
-    placesMax: 35,
-    description: "Groupe toulousain complet. Liste d'attente disponible. Contactez le diocèse pour être prévenu en cas de désistement.",
-    url: "https://toulouse.catholique.fr",
-    lat: 43.6047,
-    lng: 1.4442,
-    region: "Occitanie"
-  },
-  {
-    id: 6,
-    ville: "Strasbourg",
-    nom: "Groupe Strasbourg – Pèlerin d'Alsace",
-    places: 22,
-    placesMax: 40,
-    description: "Groupe de jeunes alsaciens avec une belle tradition de pèlerinages. Programme enrichi d'une étape en Corée avant Séoul.",
-    url: "https://strasbourg.catholique.fr",
-    lat: 48.5734,
-    lng: 7.7521,
-    region: "Grand Est"
-  },
-  {
-    id: 7,
-    ville: "Bordeaux",
-    nom: "Groupe Bordeaux – Jeunes au Large",
-    places: 18,
-    placesMax: 30,
-    description: "Le groupe girondin pour les 18-35 ans. Préparation spirituelle mensuelle, accompagnement pastoral de qualité depuis le diocèse de Bordeaux.",
-    url: "https://bordeaux.catholique.fr/jmj",
-    lat: 44.8378,
-    lng: -0.5792,
-    region: "Nouvelle-Aquitaine"
-  },
-  {
-    id: 8,
-    ville: "Lille",
-    nom: "Groupe Lille – Christ on Lille",
-    places: 55,
-    placesMax: 80,
-    description: "Le grand groupe nordiste, animé par l'équipe Christ on Lille. Une préparation festive et spirituelle unique, dans l'esprit des JMJ.",
-    url: "https://lille.catholique.fr/jmj2027",
-    lat: 50.6292,
-    lng: 3.0573,
-    region: "Hauts-de-France"
-  },
-  {
-    id: 9,
-    ville: "Rennes",
-    nom: "Groupe Rennes – Bretagne Pèlerin",
-    places: 14,
-    placesMax: 25,
-    description: "Groupe breton authentique pour vivre les JMJ dans la fraternité celtique ! Quelques places seulement, inscrivez-vous vite.",
-    url: "https://rennes.catholique.fr",
-    lat: 48.1173,
-    lng: -1.6778,
-    region: "Bretagne"
-  },
-  {
-    id: 10,
-    ville: "Montpellier",
-    nom: "Groupe Montpellier – Serviteurs de Marie",
-    places: 28,
-    placesMax: 40,
-    description: "Groupe mariant foi et découverte culturelle. Un pèlerinage organisé sous le signe de la Vierge Marie, avec des temps de prière à Gyeonggi.",
-    url: "https://montpellier.catholique.fr",
-    lat: 43.6108,
-    lng: 3.8767,
-    region: "Occitanie"
-  },
-  {
-    id: 11,
-    ville: "Nice",
-    nom: "Groupe Nice – Côte d'Azur Pèlerin",
-    places: 3,
-    placesMax: 20,
-    description: "Très peu de places restantes ! Groupe azuréen avec départ depuis Nice-Côte d'Azur. Encadrement pastoral par les Dominicains de Nice.",
-    url: "https://nice.catholique.fr",
-    lat: 43.7102,
-    lng: 7.2620,
-    region: "PACA"
-  },
-  {
-    id: 12,
-    ville: "Clermont-Ferrand",
-    nom: "Groupe Auvergne – Puy de Foi",
-    places: 32,
-    placesMax: 45,
-    description: "Le groupe auvergnat, organisé depuis le cœur de la France. Une préparation aux sources du Puy-en-Velay, avec chemin de foi et convivialité.",
-    url: "https://clermont.catholique.fr",
-    lat: 45.7772,
-    lng: 3.0870,
-    region: "Auvergne-Rhône-Alpes"
-  }
+  { id:1, ville:"Lyon", nom:"Groupe Lyon – Archidiocèse de Lyon", placesMax:60, description:"Groupe de pèlerinage organisé par la Pastorale des Jeunes du diocèse de Lyon. Préparation spirituelle sur 18 mois, accompagnement d'un prêtre et d'animateurs. Départ depuis Lyon-Saint-Exupéry.", url:"https://jeunes.lyon.catholique.fr/jmj2027", lat:45.764, lng:4.836, region:"Auvergne-Rhône-Alpes", dispo:"ok" },
+  { id:2, ville:"Paris", nom:"Groupe Paris Notre-Dame", placesMax:200, description:"Grand groupe parisien organisé par le Service Diocésain de la Pastorale des Jeunes (SDPJ) de Paris. Accompagnement spirituel riche, programme culturel à Séoul inclus.", url:"https://paris.catholique.fr/jmj2027", lat:48.857, lng:2.352, region:"Île-de-France", dispo:"ok" },
+  { id:3, ville:"Marseille", nom:"Groupe Marseille – Diocèse de Marseille", placesMax:40, description:"Groupe méditerranéen organisé depuis Marseille, avec départ depuis l'aéroport Marseille-Provence. Contact le diocèse pour la liste d'attente.", url:"https://marseille.catholique.fr", lat:43.297, lng:5.370, region:"PACA", dispo:"peu" },
+  { id:4, ville:"Nantes", nom:"Groupe Nantes – Jeunes en Mission", placesMax:50, description:"Groupe organisé par les Jeunes en Mission du diocèse de Nantes. Un voyage imprégné d'esprit missionnaire et de joie dans la fraternité.", url:"https://nantes.catholique.fr/jmj", lat:47.218, lng:-1.554, region:"Pays de la Loire", dispo:"ok" },
+  { id:5, ville:"Toulouse", nom:"Groupe Toulouse – La Croix du Sud", placesMax:35, description:"Groupe toulousain complet. Liste d'attente disponible. Contactez le diocèse pour être prévenu en cas de désistement.", url:"https://toulouse.catholique.fr", lat:43.605, lng:1.444, region:"Occitanie", dispo:"complet" },
+  { id:6, ville:"Strasbourg", nom:"Groupe Strasbourg – Pèlerin d'Alsace", placesMax:40, description:"Groupe de jeunes alsaciens avec une belle tradition de pèlerinages. Programme enrichi d'une étape de découverte en Corée avant Séoul.", url:"https://strasbourg.catholique.fr", lat:48.573, lng:7.752, region:"Grand Est", dispo:"ok" },
+  { id:7, ville:"Bordeaux", nom:"Groupe Bordeaux – Jeunes au Large", placesMax:30, description:"Le groupe girondin pour les 18-35 ans. Préparation spirituelle mensuelle, accompagnement pastoral de qualité depuis le diocèse de Bordeaux.", url:"https://bordeaux.catholique.fr/jmj", lat:44.838, lng:-0.579, region:"Nouvelle-Aquitaine", dispo:"ok" },
+  { id:8, ville:"Lille", nom:"Groupe Lille – Christ on Lille", placesMax:80, description:"Le grand groupe nordiste, animé par l'équipe Christ on Lille. Une préparation festive et spirituelle unique, dans l'esprit des JMJ.", url:"https://lille.catholique.fr/jmj2027", lat:50.629, lng:3.057, region:"Hauts-de-France", dispo:"ok" },
+  { id:9, ville:"Rennes", nom:"Groupe Rennes – Bretagne Pèlerin", placesMax:25, description:"Groupe breton authentique pour vivre les JMJ dans la fraternité celtique. Quelques places seulement, inscrivez-vous vite.", url:"https://rennes.catholique.fr", lat:48.117, lng:-1.678, region:"Bretagne", dispo:"peu" },
+  { id:10, ville:"Montpellier", nom:"Groupe Montpellier – Serviteurs de Marie", placesMax:40, description:"Groupe mariant foi et découverte culturelle. Un pèlerinage organisé sous le signe de la Vierge Marie, avec des temps de prière à Gyeonggi.", url:"https://montpellier.catholique.fr", lat:43.611, lng:3.877, region:"Occitanie", dispo:"ok" },
+  { id:11, ville:"Nice", nom:"Groupe Nice – Côte d'Azur Pèlerin", placesMax:20, description:"Groupe azuréen avec départ depuis Nice-Côte d'Azur. Encadrement pastoral par les Dominicains de Nice. Très peu de places restantes.", url:"https://nice.catholique.fr", lat:43.710, lng:7.262, region:"PACA", dispo:"peu" },
+  { id:12, ville:"Clermont-Ferrand", nom:"Groupe Auvergne – Puy de Foi", placesMax:45, description:"Le groupe auvergnat, organisé depuis le cœur de la France. Une préparation aux sources du Puy-en-Velay, chemin de foi et convivialité.", url:"https://clermont.catholique.fr", lat:45.777, lng:3.087, region:"Auvergne-Rhône-Alpes", dispo:"ok" }
 ];
 
-// ─── RENDER CARDS ───
-function getDispo(places, placesMax) {
-  if (places === 0) return { label: 'Complet', cls: 'dispo-complet' };
-  const pct = places / placesMax;
-  if (pct < 0.3) return { label: 'Peu de places', cls: 'dispo-peu' };
-  return { label: 'Places disponibles', cls: 'dispo-ok' };
+function getDispo(dispo) {
+  if (dispo === 'complet') return { label:'Complet', cls:'dispo-complet' };
+  if (dispo === 'peu') return { label:'Peu de places', cls:'dispo-peu' };
+  return { label:'Places disponibles', cls:'dispo-ok' };
 }
 
+// ─── RENDER CARDS ───
 function renderCards(data) {
   const grid = document.getElementById('groupes-grid');
+  if (!data.length) {
+    grid.innerHTML = '<p style="color:#999;font-size:14px;padding:24px 0">Aucun groupe ne correspond à ce filtre.</p>';
+    return;
+  }
   grid.innerHTML = data.map(g => {
-    const dispo = getDispo(g.places, g.placesMax);
-    const fillPct = ((g.placesMax - g.places) / g.placesMax * 100).toFixed(0);
+    const d = getDispo(g.dispo);
     return `
     <a class="groupe-card" href="${g.url}" target="_blank" rel="noopener noreferrer">
       <div class="groupe-card-top">
@@ -1688,17 +1686,14 @@ function renderCards(data) {
         <div class="groupe-tag">${g.region}</div>
       </div>
       <div class="groupe-card-bottom">
-        <div class="groupe-info-row">
-          <div class="groupe-places">
-            <div class="places-bar">
-              <div class="places-fill" style="width:${fillPct}%"></div>
-            </div>
-            <span class="places-text">${g.places} places restantes</span>
-          </div>
-          <span class="groupe-dispo ${dispo.cls}">${dispo.label}</span>
+        <div class="groupe-dispo-row">
+          <span class="groupe-dispo ${d.cls}">${d.label}</span>
         </div>
         <p class="groupe-desc">${g.description}</p>
-        <span class="groupe-link">Voir le groupe <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></span>
+        <span class="groupe-link">
+          Voir le groupe
+          <i class="ti ti-arrow-right"></i>
+        </span>
       </div>
     </a>`;
   }).join('');
@@ -1710,18 +1705,87 @@ renderCards(groupes);
 function filterGroupes(type, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  let filtered;
-  if (type === 'all') filtered = groupes;
-  else if (type === 'dispo') filtered = groupes.filter(g => (g.places / g.placesMax) >= 0.3);
-  else if (type === 'peu') filtered = groupes.filter(g => g.places > 0 && (g.places / g.placesMax) < 0.3);
+  let filtered = groupes;
+  if (type === 'dispo') filtered = groupes.filter(g => g.dispo === 'ok');
+  else if (type === 'peu') filtered = groupes.filter(g => g.dispo === 'peu');
+  else if (type === 'complet') filtered = groupes.filter(g => g.dispo === 'complet');
   renderCards(filtered);
 }
 
 // ─── MAP ───
+// Build a Google My Maps-style embed with all cities as markers using a custom iframe
+function buildMapSrc(focusLat, focusLng) {
+  // Use OpenStreetMap via iframe with markers workaround — since Google Maps embed doesn't support custom markers
+  // We use a Leaflet-based solution embedded in a blob URL
+  return null; // handled below via Leaflet
+}
+
+let mapInitialized = false;
+
 function openMap() {
   document.getElementById('map-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
   renderMapList(groupes);
+  if (!mapInitialized) {
+    initLeafletMap();
+    mapInitialized = true;
+  }
+}
+
+function initLeafletMap() {
+  const frame = document.getElementById('map-frame');
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+  body,html{margin:0;padding:0;height:100%;width:100%}
+  #map{height:100vh;width:100%}
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"><\/script>
+</head>
+<body>
+<div id="map"></div>
+<script>
+  var map = L.map('map').setView([46.5, 2.3], 6);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors',
+    maxZoom: 18
+  }).addTo(map);
+
+  var redIcon = L.divIcon({
+    className: '',
+    html: '<div style="width:14px;height:14px;background:#F42736;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.4)"></div>',
+    iconSize:[14,14],
+    iconAnchor:[7,7]
+  });
+
+  var groupes = ${JSON.stringify(groupes)};
+
+  function getDispoLabel(dispo) {
+    if (dispo === 'complet') return 'Complet';
+    if (dispo === 'peu') return 'Peu de places';
+    return 'Places disponibles';
+  }
+
+  groupes.forEach(function(g) {
+    var popup = '<div style="font-family:sans-serif;min-width:180px">'
+      + '<div style="font-size:18px;font-weight:900;color:#F42736;letter-spacing:0.03em">' + g.ville + '</div>'
+      + '<div style="font-size:12px;color:#555;margin-bottom:8px">' + g.nom + '</div>'
+      + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#777;margin-bottom:8px">' + getDispoLabel(g.dispo) + '</div>'
+      + '<a href="' + g.url + '" target="_blank" style="font-size:12px;font-weight:700;color:#0047BB;text-transform:uppercase;letter-spacing:0.06em">Voir le groupe →</a>'
+      + '</div>';
+    L.marker([g.lat, g.lng], {icon: redIcon})
+      .addTo(map)
+      .bindPopup(popup);
+  });
+<\/script>
+</body>
+</html>`;
+
+  const blob = new Blob([html], {type: 'text/html'});
+  frame.src = URL.createObjectURL(blob);
 }
 
 function closeMap() {
@@ -1736,21 +1800,22 @@ function closeMapOnBg(e) {
 function renderMapList(data) {
   const list = document.getElementById('map-groupe-list');
   list.innerHTML = data.map(g => {
-    const dispo = getDispo(g.places, g.placesMax);
+    const d = getDispo(g.dispo);
     return `
     <a class="map-groupe-item" href="${g.url}" target="_blank" rel="noopener noreferrer">
       <div class="map-groupe-city">${g.ville}</div>
       <div class="map-groupe-name">${g.nom}</div>
       <div class="map-groupe-meta">
-        <span class="map-places"><strong>${g.places}</strong> place${g.places > 1 ? 's' : ''} restante${g.places > 1 ? 's' : ''} · ${g.placesMax} au total</span>
-        <span class="groupe-dispo ${dispo.cls}" style="font-size:11px;padding:3px 10px">${dispo.label}</span>
+        <span style="font-size:11px;color:#999">${g.region}</span>
+        <span class="groupe-dispo ${d.cls}" style="font-size:11px;padding:3px 10px">${d.label}</span>
       </div>
     </a>`;
   }).join('');
 }
 
 function searchGroupes(query) {
-  const q = query.toLowerCase();
+  const q = query.toLowerCase().trim();
+  if (!q) { renderMapList(groupes); return; }
   const filtered = groupes.filter(g =>
     g.ville.toLowerCase().includes(q) ||
     g.nom.toLowerCase().includes(q) ||
@@ -1760,32 +1825,28 @@ function searchGroupes(query) {
 }
 
 // ─── ORGANISATEUR ───
-function handleOrganistaeur(e) {
+function handleOrganisateur(e) {
   e.preventDefault();
-  alert('Le formulaire d\'inscription pour les organisateurs arrive très bientôt ! En attendant, contactez-nous par email à contact@jmj2027-groupes.fr');
+  // Replace the # with your Google Forms URL:
+  const formsUrl = '#';
+  if (formsUrl !== '#') {
+    window.open(formsUrl, '_blank');
+  } else {
+    alert('Le formulaire d\'inscription organisateur arrive très bientôt !\nEn attendant : contact@jmj2027-groupes.fr');
+  }
 }
 
 // ─── SCROLL REVEAL ───
 const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-    }
-  });
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 reveals.forEach(el => observer.observe(el));
 
-// ─── NAV SCROLL ───
+// ─── NAV SHADOW ───
 window.addEventListener('scroll', () => {
-  const nav = document.querySelector('nav');
-  if (window.scrollY > 80) {
-    nav.style.borderBottomColor = 'rgba(244,39,54,0.2)';
-    nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
-  } else {
-    nav.style.borderBottomColor = 'rgba(244,39,54,0.15)';
-    nav.style.boxShadow = 'none';
-  }
+  const nav = document.getElementById('main-nav');
+  nav.style.boxShadow = window.scrollY > 60 ? '0 2px 24px rgba(0,0,0,0.08)' : 'none';
 });
 </script>
 </body>
